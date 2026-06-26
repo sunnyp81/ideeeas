@@ -17,19 +17,19 @@ const jsonld = {
   path={path}
   jsonld={jsonld}
 >
-  <div class="wrap pt-12 sm:pt-16">
-    <h1 class="font-display text-4xl sm:text-5xl font-extrabold text-ink">Every idea collection</h1>
-    <p class="mt-4 text-lg text-ink-soft max-w-2xl">
+  <div class="wrap pt-16 sm:pt-20">
+    <h1 class="reveal in font-display text-4xl sm:text-5xl font-extrabold text-snow">Every <span class="grad-text">idea</span> collection</h1>
+    <p class="reveal in mt-4 text-lg text-fog max-w-2xl">
       {totalIdeas} validated ideas across {clusters.length} collections. Each one is structured the same way, demand, difficulty, how it makes money, and the first step.
     </p>
   </div>
 
-  <div class="wrap mt-10 mb-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="wrap mt-10 mb-24 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     {clusters.map((c) => (
-      <a href={`/ideas/${c.slug}/`} class="group rounded-2xl border border-line bg-white p-6 hover:border-spark hover:shadow-md transition-all">
-        <div class="text-xs font-semibold uppercase tracking-wide text-spark">{c.ideas.length} ideas · {c.audience}</div>
-        <h2 class="mt-2 font-display text-xl font-bold text-ink group-hover:text-spark transition-colors">{c.title}</h2>
-        <p class="mt-2 text-sm text-mist line-clamp-3">{c.intro}</p>
+      <a href={`/ideas/${c.slug}/`} class="reveal glass glass-hover rounded-2xl p-6 block">
+        <div class="text-xs font-semibold uppercase tracking-wide grad-text">{c.ideas.length} ideas · {c.audience}</div>
+        <h2 class="mt-2 font-display text-xl font-bold text-snow">{c.title}</h2>
+        <p class="mt-2 text-sm text-fog line-clamp-3">{c.intro}</p>
       </a>
     ))}
   </div>

@@ -31,25 +31,25 @@ const jsonld = {
   path={path}
   jsonld={jsonld}
 >
-  <article class="wrap-narrow py-16">
-    <h1 class="font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">How to validate a startup idea before you build it</h1>
-    <p class="mt-6 text-lg text-ink-soft leading-relaxed">
+  <article class="wrap-narrow py-20">
+    <h1 class="reveal in font-display text-4xl sm:text-5xl font-extrabold text-snow leading-tight">How to <span class="grad-text">validate</span> a startup idea before you build it</h1>
+    <p class="reveal in mt-6 text-lg text-fog leading-relaxed">
       Most ideas die not because they were bad, but because nobody checked whether anyone wanted them. Validation is the cheap insurance you buy before spending months building. Here is the same six-step process behind every idea in this library.
     </p>
 
-    <ol class="mt-10 space-y-8">
+    <ol class="mt-12 space-y-4">
       {steps.map(([name, text], i) => (
-        <li class="flex gap-5">
-          <span class="shrink-0 font-display text-2xl font-extrabold text-spark w-10">{String(i + 1).padStart(2, '0')}</span>
+        <li class="reveal glass rounded-2xl p-6 flex gap-5">
+          <span class="shrink-0 font-display text-2xl font-extrabold grad-text w-10">{String(i + 1).padStart(2, '0')}</span>
           <div>
-            <h2 class="font-display text-xl font-bold text-ink">{name}</h2>
-            <p class="mt-2 text-ink-soft leading-relaxed">{text}</p>
+            <h2 class="font-display text-xl font-bold text-snow">{name}</h2>
+            <p class="mt-2 text-fog leading-relaxed">{text}</p>
           </div>
         </li>
       ))}
     </ol>
 
-    <p class="mt-10 text-ink-soft">
+    <p class="reveal mt-10 text-fog">
       Want ideas that already have the demand signal mapped? <a href="/ideas/" class="spark-link font-semibold">Browse the validated idea library →</a>
     </p>
   </article>

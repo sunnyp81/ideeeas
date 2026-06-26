@@ -17,52 +17,68 @@ const jsonld = {
     'query-input': 'required name=search_term_string',
   },
 };
+
+const pillars = [
+  ['Demand', 'Backed by a real, observable signal, not a hunch.'],
+  ['Difficulty', 'Honest build effort and time to MVP.'],
+  ['Money', 'A specific way it earns from day one.'],
+  ['First step', 'The exact next move to validate it.'],
+];
 ---
 <Base path="/" jsonld={jsonld}>
   <!-- Hero -->
-  <section class="wrap pt-16 sm:pt-24 pb-12">
-    <p class="text-spark font-semibold uppercase tracking-wide text-sm">Validated ideas, not idea spam</p>
-    <h1 class="mt-4 font-display text-5xl sm:text-7xl font-extrabold leading-[1.05] text-ink max-w-4xl">
-      Stop hunting for the idea.<br />Start with a <span class="text-spark">validated</span> one.
-    </h1>
-    <p class="mt-6 text-xl text-ink-soft max-w-2xl leading-relaxed">
-      {totalIdeas}+ startup and side-project ideas, each one with a real demand signal, build difficulty, how it makes money, and the first step you should take. No fluff, no get-rich-quick.
-    </p>
-    <div class="mt-8 flex flex-wrap gap-4">
-      <a href="/ideas/" class="rounded-full bg-ink text-paper font-semibold px-7 py-3.5 hover:bg-spark transition-colors">Browse all ideas</a>
-      <a href="#subscribe" class="rounded-full border border-line bg-white text-ink font-semibold px-7 py-3.5 hover:border-spark transition-colors">Get the weekly drop</a>
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute -top-40 right-[-10%] h-[34rem] w-[34rem] rounded-full blur-3xl opacity-50"
+        style="background: radial-gradient(closest-side, rgba(124,92,255,0.5), transparent);"></div>
+      <div class="absolute top-40 left-[-15%] h-[28rem] w-[28rem] rounded-full blur-3xl opacity-40"
+        style="background: radial-gradient(closest-side, rgba(36,214,236,0.4), transparent);"></div>
+    </div>
+
+    <div class="wrap pt-20 sm:pt-28 pb-14">
+      <div class="reveal in inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-fog">
+        <span class="h-1.5 w-1.5 rounded-full" style="background:#34e1b4"></span>
+        Validated ideas, not idea spam
+      </div>
+      <h1 class="reveal in mt-6 font-display text-5xl sm:text-7xl font-extrabold leading-[1.03] text-snow max-w-4xl">
+        Stop hunting for the idea.<br />Start with a <span class="grad-text">validated</span> one.
+      </h1>
+      <p class="reveal in mt-6 text-xl text-fog max-w-2xl leading-relaxed">
+        {totalIdeas}+ startup and side-project ideas, each one with a real demand signal, build difficulty, how it makes money, and the first step you should take. No fluff, no get-rich-quick.
+      </p>
+      <div class="reveal in mt-9 flex flex-wrap gap-4">
+        <a href="/ideas/" class="btn-grad rounded-full px-7 py-3.5">Browse all ideas</a>
+        <a href="#subscribe" class="btn-ghost rounded-full px-7 py-3.5 text-snow font-semibold">Get the weekly drop</a>
+      </div>
     </div>
   </section>
 
   <!-- How each idea is structured -->
-  <section class="wrap py-10 border-y border-line">
-    <div class="grid gap-6 sm:grid-cols-4 text-center">
-      {[
-        ['Demand', 'Backed by a real, observable signal, not a hunch.'],
-        ['Difficulty', 'Honest build effort and time-to-MVP.'],
-        ['Money', 'A specific way it earns from day one.'],
-        ['First step', 'The exact next move to validate it.'],
-      ].map(([t, d]) => (
-        <div>
-          <div class="font-display text-lg font-bold text-spark">{t}</div>
-          <p class="mt-1 text-sm text-mist">{d}</p>
+  <section class="wrap py-12">
+    <div class="reveal glass rounded-2xl grid gap-px sm:grid-cols-4 overflow-hidden">
+      {pillars.map(([t, d]) => (
+        <div class="p-6 text-center bg-white/[0.015]">
+          <div class="font-display text-lg font-bold grad-text">{t}</div>
+          <p class="mt-1.5 text-sm text-fog">{d}</p>
         </div>
       ))}
     </div>
   </section>
 
   <!-- Featured collections -->
-  <section class="wrap py-16">
+  <section class="wrap py-14">
     <div class="flex items-end justify-between mb-8">
-      <h2 class="font-display text-3xl font-extrabold text-ink">Popular collections</h2>
+      <h2 class="reveal font-display text-3xl font-extrabold text-snow">Popular collections</h2>
       <a href="/ideas/" class="spark-link text-sm font-semibold">See all {clusters.length} →</a>
     </div>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {featured.map((c) => (
-        <a href={`/ideas/${c.slug}/`} class="group rounded-2xl border border-line bg-white p-6 hover:border-spark hover:shadow-md transition-all">
-          <div class="text-xs font-semibold uppercase tracking-wide text-spark">{c.ideas.length} ideas · {c.audience}</div>
-          <h3 class="mt-2 font-display text-xl font-bold text-ink group-hover:text-spark transition-colors">{c.title}</h3>
-          <p class="mt-2 text-sm text-mist line-clamp-3">{c.intro}</p>
+      {featured.map((c, i) => (
+        <a href={`/ideas/${c.slug}/`}
+          class={`reveal glass glass-hover rounded-2xl p-6 block ${i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
+          <div class="text-xs font-semibold uppercase tracking-wide grad-text">{c.ideas.length} ideas · {c.audience}</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-snow">{c.title}</h3>
+          <p class="mt-2 text-sm text-fog line-clamp-3">{c.intro}</p>
+          <span class="mt-4 inline-block text-sm font-semibold text-snow/80">Explore →</span>
         </a>
       ))}
     </div>
