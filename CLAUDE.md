@@ -29,10 +29,16 @@ Aged brandable ("ideeeas" = ideas) Sunny already owned. Real legacy authority in
 - `npm run dev` / `npm run build` / `npm run preview`. Build output `dist`.
 - Deploy via GitHub (repo `sunnyp81/ideeeas`). CF Pages: build `npm run build`, output `dist`, NODE_VERSION=22. `npm run deploy` does a wrangler direct upload to project `ideeeas` if authed.
 
-## OPEN / TODO before go-live
-- [ ] Upload `disavow.txt` (83 toxic .shop/.top PBN domains from the Ahrefs export) in GSC — spam wave is actively hitting the domain.
-- [ ] Wire real StaticForms access key in `Subscribe.astro`.
-- [ ] Real affiliate IDs on tool links.
-- [ ] Point ideeeas.com DNS at the deploy; submit sitemap to GSC + Bing.
-- [ ] Replace SVG-derived `public/og-default.png` with a Satori-generated OG if desired.
-- [ ] Land the legacy Smashing/TNW relevance: add an internal link plan + consider reclaiming the old homepage URL pattern.
+## DONE (2026-06-27)
+- [x] LIVE on https://ideeeas.pages.dev (production wrangler deploy, all routes 200).
+- [x] StaticForms key wired (`sf_9e906eb6c00416b9d3354749`, shared portfolio key, `_site` attribution).
+- [x] Affiliate tool links use `rel="nofollow sponsored noopener noreferrer"`.
+- [x] `.github/workflows/deploy.yml` added (push master = deploy, needs secrets below).
+
+## OPEN / TODO (Sunny's manual steps)
+- [ ] **Auto-deploy:** add repo secrets `CF_API_KEY` (main-acct global key) + `CF_EMAIL` (sunnypat81@gmail.com) to github.com/sunnyp81/ideeeas, OR connect the repo in CF Pages dashboard (build `npm run build`, output `dist`, NODE_VERSION=22). Until then deploy manually with `npm run deploy`.
+- [ ] **Custom domain + DNS:** attach ideeeas.com to the Pages project + point DNS (CNAME → ideeeas.pages.dev, proxied) in the CF account holding the zone.
+- [ ] Upload `disavow.txt` (83 toxic .shop/.top PBN domains) in GSC — spam wave actively hitting the domain.
+- [ ] Swap placeholder tool URLs for real affiliate IDs.
+- [ ] Submit sitemap to GSC + Bing once domain is live.
+- [ ] Optional: Satori OG to replace the SVG-derived `public/og-default.png`; internal-link plan to land the legacy Smashing/TNW relevance.
