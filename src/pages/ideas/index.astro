@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { clusters, totalIdeas } from '../../data/clusters.js';
+import { pickColor } from '../../data/palette.js';
 
 const path = '/ideas/';
 const jsonld = {
@@ -18,17 +19,17 @@ const jsonld = {
   jsonld={jsonld}
 >
   <div class="wrap pt-16 sm:pt-20">
-    <h1 class="reveal in font-display text-4xl sm:text-5xl font-extrabold text-snow">Every <span class="grad-text">idea</span> collection</h1>
-    <p class="reveal in mt-4 text-lg text-fog max-w-2xl">
+    <h1 class="reveal in font-display text-4xl sm:text-5xl font-bold text-ink">Every <span class="mark">idea</span> collection</h1>
+    <p class="reveal in mt-4 text-lg text-ink/80 max-w-2xl font-medium">
       {totalIdeas} validated ideas across {clusters.length} collections. Each one is structured the same way, demand, difficulty, how it makes money, and the first step.
     </p>
   </div>
 
-  <div class="wrap mt-10 mb-24 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-    {clusters.map((c) => (
-      <a href={`/ideas/${c.slug}/`} class="reveal glass glass-hover rounded-2xl p-6 block">
-        <div class="text-xs font-semibold uppercase tracking-wide grad-text">{c.ideas.length} ideas · {c.audience}</div>
-        <h2 class="mt-2 font-display text-xl font-bold text-snow">{c.title}</h2>
+  <div class="wrap mt-10 mb-24 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {clusters.map((c, i) => (
+      <a href={`/ideas/${c.slug}/`} class="reveal press bg-white brut shadow-hard p-6 block">
+        <span class="inline-block brut px-2 py-1 text-xs font-bold uppercase tracking-wide text-ink" style={`background:${pickColor(i)}`}>{c.ideas.length} ideas · {c.audience}</span>
+        <h2 class="mt-3 font-display text-xl font-bold text-ink">{c.title}</h2>
         <p class="mt-2 text-sm text-fog line-clamp-3">{c.intro}</p>
       </a>
     ))}
