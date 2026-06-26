@@ -1,0 +1,65 @@
+---
+const { idea, n } = Astro.props;
+
+const demandColor = {
+  High: 'bg-grow/15 text-grow',
+  Medium: 'bg-amber-500/15 text-amber-700',
+  Emerging: 'bg-spark/15 text-spark',
+}[idea.demand] || 'bg-line text-mist';
+
+const diffColor = {
+  Low: 'text-grow',
+  Medium: 'text-amber-700',
+  High: 'text-spark',
+}[idea.difficulty] || 'text-mist';
+---
+<article class="rounded-2xl border border-line bg-white p-6 sm:p-7 shadow-sm">
+  <div class="flex items-start justify-between gap-4">
+    <h3 class="font-display text-xl font-bold text-ink">
+      <span class="text-mist mr-2">{String(n).padStart(2, '0')}</span>{idea.name}
+    </h3>
+    <span class={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${demandColor}`}>
+      {idea.demand} demand
+    </span>
+  </div>
+
+  <p class="mt-3 text-ink-soft leading-relaxed">{idea.pitch}</p>
+
+  <p class="mt-3 text-sm text-mist"><span class="font-semibold text-ink-soft">The problem:</span> {idea.problem}</p>
+
+  <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm border-t border-line pt-5">
+    <div>
+      <dt class="text-mist">Difficulty</dt>
+      <dd class={`font-semibold ${diffColor}`}>{idea.difficulty}</dd>
+    </div>
+    <div>
+      <dt class="text-mist">Time to MVP</dt>
+      <dd class="font-semibold text-ink">{idea.timeToMvp}</dd>
+    </div>
+    <div class="col-span-2">
+      <dt class="text-mist">How it makes money</dt>
+      <dd class="font-medium text-ink">{idea.monetisation}</dd>
+    </div>
+    <div class="col-span-2">
+      <dt class="text-mist">First step</dt>
+      <dd class="font-medium text-ink">{idea.firstStep}</dd>
+    </div>
+  </dl>
+
+  <div class="mt-5 flex flex-wrap items-center gap-2">
+    {idea.stack.map((s) => (
+      <span class="rounded-md bg-paper border border-line px-2 py-1 text-xs text-ink-soft">{s}</span>
+    ))}
+  </div>
+
+  {idea.tools?.length > 0 && (
+    <p class="mt-4 text-sm text-mist">
+      Build it with{' '}
+      {idea.tools.map((t, i) => (
+        <>
+          <a href={t.url} rel="sponsored nofollow noopener" target="_blank" class="spark-link">{t.name}</a>{i < idea.tools.length - 1 ? ', ' : ''}
+        </>
+      ))}
+    </p>
+  )}
+</article>

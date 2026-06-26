@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+import IdeaCard from '../../components/IdeaCard.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { clusters } from '../../data/clusters.js';
+
+export function getStaticPaths() {
+  return clusters.map((c) => ({ params: { slug: c.slug }, props: { cluster: c } }));
+}
+
+const { cluster } = Astro.props;
+const path = `/ideas/${cluster.slug}/`;
+const url = new URL(path, Astro.site).href;
+
+const others = clusters.filter((c) => c.slug !== cluster.slug).slice(0, 4);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      headline: cluster.h1,
+      description: cluster.seoDescription,
+      datePublished: cluster.updated,
+      dateModified: cluster.updated,
+      mainEntityOfPage: url,
+      author: { '@type': 'Organization', name: 'ideeeas' },
+      publisher: { '@type': 'Organization', name: 'ideeeas' },
+    },
+    {
+      '@type': 'ItemList',
+      name: cluster.title,
+      numberOfItems: cluster.ideas.length,
+      itemListElement: cluster.ideas.map((idea, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: idea.name,
+        description: idea.pitch,
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Ideas', item: new URL('/ideas/', Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: cluster.title, item: url },
+      ],
+    },
+  ],
+};
+---
+<Base title={cluster.seoTitle} description={cluster.seoDescription} path={path} jsonld={jsonld}>
+  <div class="wrap pt-12 sm:pt-16">
+    <nav class="text-sm text-mist mb-6">
+      <a href="/ideas/" class="hover:text-spark">All ideas</a> <span class="mx-1">/</span>
+      <span class="text-ink-soft">{cluster.title}</span>
+    </nav>
+
+    <header class="max-w-3xl">
+      <p class="text-spark font-semibold uppercase tracking-wide text-xs">
+        {cluster.ideas.length} validated ideas · for {cluster.audience}
+      </p>
+      <h1 class="mt-3 font-display text-4xl sm:text-5xl font-extrabold leading-tight text-ink">{cluster.h1}</h1>
+      <p class="mt-5 text-lg text-ink-soft leading-relaxed">{cluster.intro}</p>
+      <p class="mt-4 text-sm text-mist">Last reviewed {cluster.updated}. Every idea is a starting point, validate demand before you build.</p>
+    </header>
+  </div>
+
+  <div class="wrap mt-10 grid gap-6 lg:grid-cols-2">
+    {cluster.ideas.map((idea, i) => <IdeaCard idea={idea} n={i + 1} />)}
+  </div>
+
+  <Subscribe />
+
+  <section class="wrap mb-16">
+    <h2 class="font-display text-2xl font-bold mb-6">More idea collections</h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {others.map((c) => (
+        <a href={`/ideas/${c.slug}/`} class="rounded-xl border border-line bg-white p-5 hover:border-spark transition-colors">
+          <div class="font-display font-bold text-ink">{c.title}</div>
+          <div class="text-sm text-mist mt-1">{c.ideas.length} ideas for {c.audience}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

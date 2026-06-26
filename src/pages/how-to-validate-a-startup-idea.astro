@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+const path = '/how-to-validate-a-startup-idea/';
+
+const steps = [
+  ['Find the existing pain, not the idea', 'Start from a problem people already pay to avoid or work around. If they are using spreadsheets, manual labour, or a tool they complain about, the demand is proven before you build.'],
+  ['Talk to ten real buyers', 'Have ten conversations with people in the target group before writing code. You are listening for the words they use, what they have already tried, and whether they would pay, not pitching.'],
+  ['Look for where money already moves', 'Validated demand usually has a budget attached. Check job posts, competitor pricing, agency rates, and what adjacent tools charge. Silence on price is a red flag.'],
+  ['Build the smallest testable slice', 'Ship the one workflow that delivers the core value and nothing else. A landing page with a waitlist, a manual "concierge" version, or a single working feature all count.'],
+  ['Charge before you scale', 'Ask for money as early as is honest. A paid pilot, even a small one, is the only validation that survives contact with reality. Free interest is not demand.'],
+  ['Kill or commit on evidence', 'Set a clear signal in advance (e.g. "5 paying pilots in 30 days"). If you hit it, commit. If you miss it, change the idea or the buyer, do not keep polishing.'],
+];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to validate a startup idea',
+  description: 'A six-step framework for validating a startup or side-project idea before you build it.',
+  step: steps.map(([name, text], i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name,
+    text,
+  })),
+};
+---
+<Base
+  title="How to Validate a Startup Idea: A 6-Step Framework | ideeeas"
+  description="A practical six-step framework to validate a startup or side-project idea before you build, find real pain, talk to buyers, and charge before you scale."
+  path={path}
+  jsonld={jsonld}
+>
+  <article class="wrap-narrow py-16">
+    <h1 class="font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">How to validate a startup idea before you build it</h1>
+    <p class="mt-6 text-lg text-ink-soft leading-relaxed">
+      Most ideas die not because they were bad, but because nobody checked whether anyone wanted them. Validation is the cheap insurance you buy before spending months building. Here is the same six-step process behind every idea in this library.
+    </p>
+
+    <ol class="mt-10 space-y-8">
+      {steps.map(([name, text], i) => (
+        <li class="flex gap-5">
+          <span class="shrink-0 font-display text-2xl font-extrabold text-spark w-10">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h2 class="font-display text-xl font-bold text-ink">{name}</h2>
+            <p class="mt-2 text-ink-soft leading-relaxed">{text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-10 text-ink-soft">
+      Want ideas that already have the demand signal mapped? <a href="/ideas/" class="spark-link font-semibold">Browse the validated idea library →</a>
+    </p>
+  </article>
+  <Subscribe />
+</Base>

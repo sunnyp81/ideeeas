@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { clusters, totalIdeas } from '../data/clusters.js';
+
+const featured = clusters.slice(0, 6);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'ideeeas',
+  url: 'https://ideeeas.com',
+  description: 'A growing library of validated startup and side-project ideas, each with demand signals, difficulty, monetisation and a starter stack.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://ideeeas.com/ideas/?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+<Base path="/" jsonld={jsonld}>
+  <!-- Hero -->
+  <section class="wrap pt-16 sm:pt-24 pb-12">
+    <p class="text-spark font-semibold uppercase tracking-wide text-sm">Validated ideas, not idea spam</p>
+    <h1 class="mt-4 font-display text-5xl sm:text-7xl font-extrabold leading-[1.05] text-ink max-w-4xl">
+      Stop hunting for the idea.<br />Start with a <span class="text-spark">validated</span> one.
+    </h1>
+    <p class="mt-6 text-xl text-ink-soft max-w-2xl leading-relaxed">
+      {totalIdeas}+ startup and side-project ideas, each one with a real demand signal, build difficulty, how it makes money, and the first step you should take. No fluff, no get-rich-quick.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="/ideas/" class="rounded-full bg-ink text-paper font-semibold px-7 py-3.5 hover:bg-spark transition-colors">Browse all ideas</a>
+      <a href="#subscribe" class="rounded-full border border-line bg-white text-ink font-semibold px-7 py-3.5 hover:border-spark transition-colors">Get the weekly drop</a>
+    </div>
+  </section>
+
+  <!-- How each idea is structured -->
+  <section class="wrap py-10 border-y border-line">
+    <div class="grid gap-6 sm:grid-cols-4 text-center">
+      {[
+        ['Demand', 'Backed by a real, observable signal, not a hunch.'],
+        ['Difficulty', 'Honest build effort and time-to-MVP.'],
+        ['Money', 'A specific way it earns from day one.'],
+        ['First step', 'The exact next move to validate it.'],
+      ].map(([t, d]) => (
+        <div>
+          <div class="font-display text-lg font-bold text-spark">{t}</div>
+          <p class="mt-1 text-sm text-mist">{d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured collections -->
+  <section class="wrap py-16">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="font-display text-3xl font-extrabold text-ink">Popular collections</h2>
+      <a href="/ideas/" class="spark-link text-sm font-semibold">See all {clusters.length} →</a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {featured.map((c) => (
+        <a href={`/ideas/${c.slug}/`} class="group rounded-2xl border border-line bg-white p-6 hover:border-spark hover:shadow-md transition-all">
+          <div class="text-xs font-semibold uppercase tracking-wide text-spark">{c.ideas.length} ideas · {c.audience}</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-ink group-hover:text-spark transition-colors">{c.title}</h3>
+          <p class="mt-2 text-sm text-mist line-clamp-3">{c.intro}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <Subscribe />
+</Base>

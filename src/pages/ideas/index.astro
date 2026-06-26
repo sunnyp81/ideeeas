@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { clusters, totalIdeas } from '../../data/clusters.js';
+
+const path = '/ideas/';
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'All idea collections',
+  description: `Browse ${totalIdeas} validated startup and side-project ideas across ${clusters.length} collections.`,
+  url: new URL(path, Astro.site).href,
+};
+---
+<Base
+  title={`All Idea Collections, ${totalIdeas} Validated Ideas | ideeeas`}
+  description={`Browse ${totalIdeas} validated startup and side-project ideas across ${clusters.length} collections, each with demand, difficulty, monetisation and a starter stack.`}
+  path={path}
+  jsonld={jsonld}
+>
+  <div class="wrap pt-12 sm:pt-16">
+    <h1 class="font-display text-4xl sm:text-5xl font-extrabold text-ink">Every idea collection</h1>
+    <p class="mt-4 text-lg text-ink-soft max-w-2xl">
+      {totalIdeas} validated ideas across {clusters.length} collections. Each one is structured the same way, demand, difficulty, how it makes money, and the first step.
+    </p>
+  </div>
+
+  <div class="wrap mt-10 mb-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {clusters.map((c) => (
+      <a href={`/ideas/${c.slug}/`} class="group rounded-2xl border border-line bg-white p-6 hover:border-spark hover:shadow-md transition-all">
+        <div class="text-xs font-semibold uppercase tracking-wide text-spark">{c.ideas.length} ideas · {c.audience}</div>
+        <h2 class="mt-2 font-display text-xl font-bold text-ink group-hover:text-spark transition-colors">{c.title}</h2>
+        <p class="mt-2 text-sm text-mist line-clamp-3">{c.intro}</p>
+      </a>
+    ))}
+  </div>
+</Base>

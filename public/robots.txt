@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ideeeas.com/sitemap-index.xml
