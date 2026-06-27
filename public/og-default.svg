@@ -1,26 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="g" x1="80" y1="240" x2="1000" y2="420" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#22e3ff"/>
-      <stop offset="0.5" stop-color="#8b5cff"/>
-      <stop offset="1" stop-color="#ff2e97"/>
+    <linearGradient id="g" x1="80" y1="300" x2="900" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5fe3d0"/><stop offset="0.5" stop-color="#3ad6c0"/><stop offset="1" stop-color="#6aa6f0"/>
     </linearGradient>
-    <radialGradient id="m" cx="0.85" cy="0.1" r="0.6">
-      <stop offset="0" stop-color="#ff2e97" stop-opacity="0.32"/><stop offset="1" stop-color="#ff2e97" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="c" cx="0.05" cy="0.95" r="0.6">
-      <stop offset="0" stop-color="#22e3ff" stop-opacity="0.28"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/>
+    <radialGradient id="t" cx="0.85" cy="0.05" r="0.6">
+      <stop offset="0" stop-color="#3ad6c0" stop-opacity="0.22"/><stop offset="1" stop-color="#3ad6c0" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1200" height="630" fill="#07070e"/>
-  <rect width="1200" height="630" fill="url(#m)"/>
-  <rect width="1200" height="630" fill="url(#c)"/>
-  <g stroke="#8b9bff" stroke-opacity="0.06" stroke-width="1">
+  <rect width="1200" height="630" fill="#0a0c11"/>
+  <rect width="1200" height="630" fill="url(#t)"/>
+  <g stroke="#8ca0be" stroke-opacity="0.05" stroke-width="1">
     <path d="M0 78 H1200 M0 156 H1200 M0 234 H1200 M0 312 H1200 M0 390 H1200 M0 468 H1200 M0 546 H1200"/>
     <path d="M104 0 V630 M208 0 V630 M312 0 V630 M416 0 V630 M520 0 V630 M624 0 V630 M728 0 V630 M832 0 V630 M936 0 V630 M1040 0 V630"/>
   </g>
-  <text x="80" y="150" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="30" fill="#8a8bad"><tspan fill="#2effc2">$</tspan> ideeeas --list --validated</text>
-  <text x="80" y="300" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="72" fill="#ecedfa">Validated startup &amp;</text>
+  <text x="80" y="150" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="30" fill="#868c9c"><tspan fill="#3ad6c0">$</tspan> ideeeas --list --validated</text>
+  <text x="80" y="300" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="72" fill="#e7e9ef">Validated startup &amp;</text>
   <text x="80" y="390" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="72" fill="url(#g)">side-project ideas_</text>
-  <text x="80" y="480" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="30" fill="#8a8bad">demand · difficulty · money · first_step</text>
+  <text x="80" y="480" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="30" fill="#868c9c">demand · difficulty · money · first_step</text>
 </svg>
