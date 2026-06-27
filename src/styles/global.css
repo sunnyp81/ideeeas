@@ -1,142 +1,210 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  /* type: tight grotesque + true mono for the ledger, no serif */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Tight", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-term: #080a10;       /* page */
-  --color-panel: #0f121b;      /* raised */
-  --color-text: #edeff5;       /* near-white */
-  --color-soft: #b9bed0;       /* secondary text */
-  --color-fog: #7e8497;        /* muted */
+  /* solid layered surfaces, depth from value steps not blur */
+  --color-term: #08090C;       /* page / base canvas */
+  --color-panel: #0E1016;      /* raised: card, term-box */
+  --color-float: #15181F;      /* floating: panel, menus, hero preview */
+  --color-text: #EDEFF4;       /* primary text, no pure white */
+  --color-soft: #A4ABBB;       /* secondary text */
+  --color-fog: #6A7283;        /* muted: labels, mono index, captions */
 
-  --color-cyan: #4fe0c8;       /* primary teal */
-  --color-mint: #4fe0c8;
-  --color-blue: #6fb0ff;       /* cool secondary */
-  --color-violet: #9b8cff;     /* warm secondary */
-  --color-magenta: #9b8cff;
-  --color-lime: #4fe0c8;
-  --color-orange: #e7bd7a;     /* gold, "medium" only */
-  --color-yellow: #e7bd7a;
+  /* the one disciplined accent (refined indigo), named cyan as instructed */
+  --color-cyan: #6E79F2;       /* THE accent: primary fill, active nav, brand mark */
+  --color-mint: #6E79F2;       /* alias of accent */
+  --color-lime: #6E79F2;       /* alias of accent */
+  --color-blue: #8B93FF;       /* accent-bright: links, hover, focus ring */
+  --color-violet: #8B93FF;     /* emerging-demand state, alias of accent-bright */
+  --color-magenta: #8B93FF;    /* alias of accent-bright */
+  --color-accent-deep: #4A53C8;    /* button fill: white text clears AA (approx 6.2:1) */
+  --color-accent-deep-hi: #5A63D8; /* button hover fill: white text clears AA (approx 5:1) */
+  --color-orange: #E0B65C;     /* medium-demand text, muted gold */
+  --color-yellow: #E0B65C;     /* alias of medium gold */
+
+  /* hairlines and demand dots */
+  --color-edge: #1A1E27;       /* border default, approx rgba(255,255,255,0.06) */
+  --color-edge-hi: #2B313D;    /* border hover / active, approx rgba(255,255,255,0.12) */
+  --color-high: #5DD6A0;       /* high-demand text, muted emerald */
+  --color-high-dot: #46B17B;   /* high-demand dot fill */
+  --color-med-dot: #C9A14A;    /* medium-demand dot fill */
 }
 
 @layer base {
   html { scroll-behavior: smooth; background: var(--color-term); color: var(--color-text); }
+  /* flat honest near-black canvas, no mesh, no glow, no fixed grid */
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    position: relative;
     background-color: var(--color-term);
-    background-image:
-      radial-gradient(60rem 42rem at 88% -16%, rgba(79, 224, 200, 0.14), transparent 60%),
-      radial-gradient(52rem 40rem at -8% 6%, rgba(155, 140, 255, 0.12), transparent 58%),
-      radial-gradient(46rem 34rem at 50% 116%, rgba(111, 176, 255, 0.10), transparent 60%);
-    background-attachment: fixed;
   }
-  /* fine grid + edge vignette overlay */
-  body::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      linear-gradient(rgba(150, 170, 210, 0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(150, 170, 210, 0.022) 1px, transparent 1px);
-    background-size: 30px 30px;
-    mask-image: radial-gradient(120% 90% at 50% 30%, #000 55%, transparent 100%);
-  }
-  body > * { position: relative; z-index: 1; }
-  ::selection { background: rgba(79, 224, 200, 0.3); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+  ::selection { background: rgba(110, 121, 242, 0.30); color: #fff; }
 }
 
-.font-display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.012em; }
+.font-display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; }
 .wrap { max-width: 75rem; margin-inline: auto; padding-inline: 1.5rem; }
 .wrap-narrow { max-width: 46rem; margin-inline: auto; padding-inline: 1.5rem; }
 
-/* eyebrow pill */
+/* eyebrow: mono, uppercase, loose tracking, muted by default (not accent) */
 .eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.7rem; font-weight: 600;
-  color: var(--color-cyan);
+  font-family: var(--font-mono);
+  text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; font-weight: 600;
+  color: var(--color-fog);
 }
 .eyebrow-pill {
-  border: 1px solid rgba(79, 224, 200, 0.25); border-radius: 999px;
-  padding: 0.35rem 0.85rem; background: rgba(79, 224, 200, 0.06);
+  border: 1px solid var(--color-edge); border-radius: 999px;
+  padding: 0.35rem 0.85rem; background: rgba(110, 121, 242, 0.10);
 }
-.eyebrow-pill .dot { width: 0.4rem; height: 0.4rem; border-radius: 999px; background: var(--color-cyan); box-shadow: 0 0 10px var(--color-cyan); }
+/* the dot is a 4px accent square, no circle, no glow */
+.eyebrow-pill .dot { width: 4px; height: 4px; border-radius: 0; background: var(--color-cyan); box-shadow: none; }
 
-.grad-text { background: linear-gradient(100deg, #79ecd9, #4fe0c8 45%, #6fb0ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.serif-i { font-family: var(--font-display); font-style: italic; font-weight: 500; }
-.glow { text-shadow: 0 0 18px color-mix(in srgb, currentColor 32%, transparent); }
+/* gradient text retired: flat accent-bright word */
+.grad-text { color: var(--color-blue); background: none; -webkit-text-fill-color: currentColor; }
+/* the one emphasised hero word: Inter Tight italic, accent-bright */
+.serif-i { font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--color-blue); }
+/* legacy glow markup neutralised */
+.glow { text-shadow: none; }
 
-/* card (.card and legacy .term-box are equivalent) */
+/* the mono index ledger style: 042 / 096, Idea 01, tabular */
+.legend {
+  font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.05em; font-variant-numeric: tabular-nums;
+  color: var(--color-fog); text-transform: none;
+}
+
+/* raised surface, solid fill, 1px edge, catch-light bevel, no blur, no gradient */
 .card, .term-box {
-  --c: var(--color-cyan);
   position: relative;
-  border: 1px solid rgba(150, 170, 210, 0.12);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
-  border-radius: 1.1rem;
-  backdrop-filter: blur(6px);
+  background: var(--color-panel);
+  border: 1px solid var(--color-edge);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-.card > .legend, .term-box > .legend {
-  display: inline-block; margin-bottom: 0.6rem;
-  text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.66rem; font-weight: 700;
-  color: var(--c);
+/* blueprint corner ticks: 1px L brackets, flat edge at rest */
+.card::before, .term-box::before,
+.card::after, .term-box::after {
+  content: ""; position: absolute; width: 9px; height: 9px; pointer-events: none;
+  border-color: var(--color-edge); border-style: solid;
+  transition: border-color 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.card-hover, .term-hover { transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease; }
-.card-hover:hover, .term-hover:hover {
-  border-color: color-mix(in srgb, var(--c) 50%, transparent);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.012));
-  box-shadow: 0 26px 60px -34px color-mix(in srgb, var(--c) 70%, transparent), 0 0 0 1px color-mix(in srgb, var(--c) 18%, transparent) inset;
-  transform: translateY(-4px);
+.card::before, .term-box::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+.card::after, .term-box::after { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+/* interaction: brighten border, lift, reveal accent ticks plus rail, no glow */
+.card-hover, .term-hover {
+  transition: border-color 160ms cubic-bezier(0.16, 1, 0.3, 1), transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover, .term-hover:hover,
+.card-hover:focus-within, .term-hover:focus-within {
+  border-color: var(--color-edge-hi); transform: translateY(-2px);
+}
+.card-hover:hover::before, .term-hover:hover::before,
+.card-hover:focus-within::before, .term-hover:focus-within::before,
+.card-hover:hover::after, .term-hover:hover::after,
+.card-hover:focus-within::after, .term-hover:focus-within::after {
+  border-color: var(--color-cyan);
 }
 
-/* gradient hairline accent on top of a card */
+/* leader rule: a 1px top hairline like a contents-page leader, accent on hover */
 .accent-top::before {
-  content: ""; position: absolute; left: 1.1rem; right: 1.1rem; top: -1px; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--c), transparent); opacity: 0.85; border-radius: 2px;
+  content: ""; position: absolute; left: 1.1rem; right: 1.1rem; top: -1px; height: 1px;
+  background: var(--color-edge); transition: background 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover.accent-top::before, .term-hover:hover.accent-top::before,
+.card-hover:focus-within.accent-top::before, .term-hover:focus-within.accent-top::before {
+  background: var(--color-cyan);
+}
+/* the single left accent rail, wipes in on hover or focus */
+.accent-top::after {
+  content: ""; position: absolute; left: -1px; top: 14px; bottom: 14px; width: 2px;
+  background: var(--color-cyan); transform: scaleY(0); transform-origin: top;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover.accent-top::after, .term-hover:hover.accent-top::after,
+.card-hover:focus-within.accent-top::after, .term-hover:focus-within.accent-top::after {
+  transform: scaleY(1);
+}
+/* standalone rail helper for manual placement */
+.accent-rail {
+  position: absolute; left: -1px; top: 14px; bottom: 14px; width: 2px;
+  background: var(--color-cyan); transform: scaleY(0); transform-origin: top;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* glass panel (hero preview) */
+/* floating surface: solid, brighter edge, bevel plus the one allowed shadow */
 .panel {
-  border: 1px solid rgba(150, 170, 210, 0.16);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
-  border-radius: 1.25rem;
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-  backdrop-filter: blur(10px);
+  background: var(--color-float);
+  border: 1px solid var(--color-edge-hi);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 40px -24px rgba(0, 0, 0, 0.7);
 }
 
-/* buttons */
+/* primary button: solid accent, engineered radius, no glow */
 .btn-neon {
-  background: linear-gradient(100deg, #5fe6d2, #4fe0c8 60%, #6fb0ff);
-  color: #06140f; font-weight: 700; border: 0; border-radius: 999px;
-  box-shadow: 0 10px 30px -12px rgba(79, 224, 200, 0.55);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-accent-deep); color: #fff; font-weight: 600;
+  border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms;
 }
-.btn-neon:hover { transform: translateY(-2px); filter: brightness(1.04); box-shadow: 0 18px 40px -14px rgba(79, 224, 200, 0.7); }
+.btn-neon:hover { background: var(--color-accent-deep-hi); transform: translateY(-1px); }
+.btn-neon:active { transform: translateY(0); }
+.btn-neon:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 
+/* secondary button: stays monochrome forever so the primary owns the colour */
 .btn-wire {
-  border: 1px solid rgba(150, 170, 210, 0.28); color: var(--color-text); border-radius: 999px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--color-edge-hi); color: var(--color-text);
+  border-radius: 8px;
+  transition: border-color 160ms, background 160ms;
 }
-.btn-wire:hover { border-color: var(--color-cyan); color: var(--color-cyan); background: rgba(79, 224, 200, 0.06); }
+.btn-wire:hover { border-color: #3A4150; background: rgba(255, 255, 255, 0.03); }
 
-.rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(150,170,210,0.24), transparent); }
+/* flat hairline, also the ledger leader line */
+.rule { height: 1px; background: var(--color-edge); }
 
-.spark-link { color: var(--color-cyan); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--color-cyan) 42%, transparent); }
-.spark-link:hover { color: #8defdd; border-bottom-color: #8defdd; }
+/* inline link: a licensed accent moment */
+.spark-link {
+  color: var(--color-blue); text-decoration: none;
+  border-bottom: 1px solid rgba(139, 147, 255, 0.35);
+  transition: border-color 150ms, color 150ms;
+}
+.spark-link:hover { color: var(--color-blue); border-bottom-color: var(--color-blue); }
 
-.chip { border: 1px solid rgba(150, 170, 210, 0.18); color: var(--color-soft); background: rgba(255, 255, 255, 0.022); border-radius: 0.45rem; }
+/* spec chip: mono, monochrome, solid float fill */
+.chip {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-soft);
+  background: var(--color-float); border: 1px solid var(--color-edge);
+  border-radius: 6px; padding: 0.25rem 0.55rem;
+  transition: border-color 160ms;
+}
+.chip:hover { border-color: var(--color-edge-hi); }
 
+/* monochrome icon container, accent only on parent hover */
 .icon-box {
-  width: 2.5rem; height: 2.5rem; border-radius: 0.7rem; display: grid; place-items: center;
-  color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
-  background: color-mix(in srgb, var(--c) 9%, transparent);
+  width: 2.5rem; height: 2.5rem; border-radius: 8px; display: grid; place-items: center;
+  background: var(--color-float); border: 1px solid var(--color-edge); color: var(--color-soft);
+  transition: color 160ms, border-color 160ms;
 }
+.card-hover:hover .icon-box, .term-hover:hover .icon-box,
+.icon-box:hover { color: var(--color-cyan); }
 
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1), transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
 .reveal.in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; transition: none; }
-  .card-hover, .btn-neon, .btn-wire { transition: none; }
+  .card-hover, .term-hover, .btn-neon, .btn-wire { transition: border-color 160ms, background 160ms; }
+  .card-hover:hover, .term-hover:hover, .card-hover:focus-within, .term-hover:focus-within { transform: none; }
+  .accent-top::after { transition: none; }
   html { scroll-behavior: auto; }
 }

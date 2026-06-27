@@ -1,9 +1,10 @@
-// Refined single-accent scheme. One confident teal-cyan does the work,
-// with two close cousins for subtle tonal variation (no rainbow).
+// Single locked accent (refined indigo). One disciplined colour does the work,
+// default state is monochrome, so pickNeon() returns the accent at every index.
+// Bright cousin is for hover / link moments only.
 export const NEON = [
-  '#3ad6c0', // teal (primary)
-  '#46c6e0', // cyan
-  '#6aa6f0', // soft blue
+  '#6E79F2', // accent (primary)
+  '#6E79F2', // accent
+  '#6E79F2', // accent
 ];
 
 export const pickNeon = (i) => NEON[((i % NEON.length) + NEON.length) % NEON.length];

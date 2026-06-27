@@ -1,39 +1,97 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { clusters, totalIdeas } from '../../data/clusters.js';
-import { pickNeon } from '../../data/neon.js';
 
 const path = '/ideas/';
+const collectionCount = clusters.length;
+const totalLabel = String(collectionCount).padStart(2, '0');
+
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'All idea collections',
-  description: `Browse ${totalIdeas} validated startup and side-project ideas across ${clusters.length} collections.`,
+  description: `Browse ${totalIdeas} validated startup and side-project ideas across ${collectionCount} collections.`,
   url: new URL(path, Astro.site).href,
+  hasPart: clusters.map((c) => ({
+    '@type': 'CollectionPage',
+    name: c.title,
+    url: new URL(`/ideas/${c.slug}/`, Astro.site).href,
+  })),
 };
+
+// total dims one value-step so the live number reads bright and the total recedes
+const totalDim = 'color: color-mix(in srgb, var(--color-fog) 55%, var(--color-term))';
 ---
 <Base
   title={`All Idea Collections, ${totalIdeas} Validated Ideas | ideeeas`}
-  description={`Browse ${totalIdeas} validated startup and side-project ideas across ${clusters.length} collections, each with demand, difficulty, monetisation and a starter stack.`}
+  description={`Browse ${totalIdeas} validated startup and side-project ideas across ${collectionCount} collections, each with demand, difficulty, monetisation and a starter stack.`}
   path={path}
   jsonld={jsonld}
 >
-  <div class="wrap pt-20 sm:pt-24">
-    <div class="eyebrow">The library</div>
-    <h1 class="reveal in mt-4 font-display text-4xl sm:text-6xl font-semibold text-text">Every <span class="serif-i grad-text">idea</span> collection</h1>
-    <p class="reveal in mt-5 text-lg text-text/80 max-w-2xl leading-relaxed">
-      {totalIdeas} validated ideas across {clusters.length} collections. Each one is structured the same way, demand, difficulty, how it makes money, and the first step.
+  <!-- Register header -->
+  <section class="wrap pt-20 sm:pt-28 pb-12">
+    <div class="reveal in legend flex items-center gap-3">
+      <span>S.01 / {totalLabel}</span>
+      <span class="rule flex-1 max-w-[8rem]"></span>
+      <span>COLLECTIONS</span>
+    </div>
+    <h1 class="reveal in mt-5 font-display text-5xl sm:text-6xl xl:text-7xl font-semibold leading-[1.02] tracking-[-0.025em] text-text">
+      The <span class="serif-i">idea</span> register
+    </h1>
+    <p class="reveal in mt-6 max-w-2xl text-lg text-soft leading-relaxed">
+      {totalIdeas} validated ideas, catalogued across {collectionCount} collections. Every entry is structured the same way: demand, difficulty, how it makes money, and the first step.
     </p>
-  </div>
 
-  <div class="wrap mt-10 mb-24 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-    {clusters.map((c, i) => (
-      <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover accent-top p-6 block group" style={`--c:${pickNeon(i)}`}>
-        <span class="legend">{c.ideas.length} ideas · {c.audience}</span>
-        <h2 class="font-display text-xl font-semibold text-text">{c.title}</h2>
-        <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
-        <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold" style={`color:${pickNeon(i)}`}>Explore <span class="transition-transform group-hover:translate-x-1">→</span></span>
-      </a>
-    ))}
-  </div>
+    <!-- Ledger stat strip -->
+    <dl class="reveal in mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 legend text-soft">
+      <div class="flex items-baseline gap-2">
+        <dt class="text-fog">Ideas</dt>
+        <dd class="text-text">{totalIdeas}</dd>
+      </div>
+      <span class="h-3 w-px bg-edge"></span>
+      <div class="flex items-baseline gap-2">
+        <dt class="text-fog">Collections</dt>
+        <dd class="text-text">{collectionCount}</dd>
+      </div>
+      <span class="h-3 w-px bg-edge"></span>
+      <div class="flex items-baseline gap-2">
+        <dt class="text-fog">Updated</dt>
+        <dd class="text-text">Weekly</dd>
+      </div>
+    </dl>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <!-- Collections catalogue -->
+  <section class="wrap mt-12 mb-28">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {clusters.map((c, i) => (
+        <a
+          href={`/ideas/${c.slug}/`}
+          class="reveal card card-hover accent-top p-6 flex flex-col group"
+        >
+          <!-- top row: index, leader rule, count -->
+          <div class="flex items-center gap-3">
+            <span class="legend">
+              {String(i + 1).padStart(2, '0')}<span style={totalDim}> / {totalLabel}</span>
+            </span>
+            <span class="rule flex-1"></span>
+            <span class="legend text-fog">{c.ideas.length} ideas</span>
+          </div>
+
+          <h2 class="mt-5 font-display text-xl font-semibold tracking-[-0.015em] text-text">{c.title}</h2>
+          <p class="mt-2.5 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
+
+          <div class="mt-auto pt-6 flex items-center justify-between">
+            <span class="chip px-2.5 py-1">{c.audience}</span>
+            <span class="inline-flex items-center gap-1.5 text-sm font-medium text-soft transition-colors group-hover:text-blue">
+              Explore
+              <span class="transition-transform group-hover:translate-x-1">-&gt;</span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 </Base>

@@ -1,53 +1,69 @@
 ---
-import { pickNeon } from '../data/neon.js';
-const { idea, n } = Astro.props;
-const c = pickNeon(n - 1);
+// Numbered register entry. Monochrome by default, one accent earned on hover.
+const { idea, n, total = 96 } = Astro.props;
 
-const demand = {
-  High: ['var(--color-mint)', 'High demand'],
-  Medium: ['var(--color-yellow)', 'Medium demand'],
-  Emerging: ['var(--color-violet)', 'Emerging'],
-}[idea.demand] || ['var(--color-fog)', '—'];
+const demandMap = {
+  High: { text: 'var(--color-high)', dot: 'var(--color-high-dot)', bg: 'rgba(70,177,123,0.10)', label: 'High demand' },
+  Medium: { text: 'var(--color-orange)', dot: 'var(--color-med-dot)', bg: 'rgba(201,161,74,0.10)', label: 'Medium demand' },
+  Emerging: { text: 'var(--color-violet)', dot: 'var(--color-cyan)', bg: 'rgba(110,121,242,0.10)', label: 'Emerging' },
+};
+const d = demandMap[idea.demand] || { text: 'var(--color-fog)', dot: 'var(--color-fog)', bg: 'transparent', label: idea.demand || 'Unrated' };
 
 const diffN = { Low: 1, Medium: 2, High: 3 }[idea.difficulty] || 0;
-const dots = '●'.repeat(diffN) + '○'.repeat(3 - diffN);
-const id = String(n).padStart(2, '0');
+const width = Math.max(2, String(total).length);
+const id = String(n).padStart(width, '0');
+const tot = String(total).padStart(width, '0');
+const totalDim = 'color-mix(in srgb, var(--color-fog) 55%, var(--color-term))';
 ---
-<article class="reveal term-box term-hover accent-top p-6 sm:p-7" style={`--c:${c}`}>
-  <div class="flex items-start justify-between gap-4">
-    <div>
-      <span class="legend">Idea {id}</span>
-      <h3 class="font-display text-2xl font-semibold text-text leading-tight">{idea.name}</h3>
-    </div>
-    <span class="shrink-0 text-xs font-semibold mt-1" style={`color:${demand[0]}`}>{demand[1]}</span>
+<article class="reveal term-box term-hover accent-top p-6 sm:p-7">
+  <!-- top row: running index, contents-page leader rule, demand chip -->
+  <div class="flex items-center gap-3">
+    <span class="legend shrink-0">
+      <span style="color:var(--color-fog)">{id}</span>
+      <span style={`color:${totalDim}`}>{' '}/ {tot}</span>
+    </span>
+    <span class="rule flex-1"></span>
+    <span class="shrink-0 inline-flex items-center gap-1.5 font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+      style={`color:${d.text};background:${d.bg};border:1px solid var(--color-edge);border-radius:6px;padding:0.2rem 0.5rem`}>
+      <span style={`width:4px;height:4px;background:${d.dot};display:inline-block`}></span>{d.label}
+    </span>
   </div>
 
-  <p class="mt-4 text-text/85 leading-relaxed">{idea.pitch}</p>
+  <h3 class="mt-4 font-display text-[1.375rem] font-semibold text-text leading-tight tracking-[-0.015em]">{idea.name}</h3>
 
-  <p class="mt-3 text-sm text-fog"><span class="font-semibold text-text/90">The problem.</span> {idea.problem}</p>
+  <p class="mt-3 text-text/85 leading-relaxed">{idea.pitch}</p>
 
-  <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 text-sm" style="border-top:1px solid rgba(150,165,190,0.12); padding-top:1.25rem">
+  <p class="mt-3 text-sm text-soft leading-relaxed"><span class="font-semibold text-text/90">The problem.</span> {idea.problem}</p>
+
+  <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 text-sm border-t border-edge pt-5">
     <div>
-      <dt class="eyebrow text-fog" style="color:var(--color-fog)">Difficulty</dt>
-      <dd class="mt-1 font-semibold"><span class="tracking-[0.2em]" style={`color:${c}`}>{dots}</span> <span class="text-text">{idea.difficulty}</span></dd>
+      <dt class="eyebrow">Difficulty</dt>
+      <dd class="mt-1.5 flex items-center gap-2">
+        <span class="inline-flex items-center gap-1">
+          {[0, 1, 2].map((i) => (
+            <span style={`width:5px;height:5px;display:inline-block;background:${i < diffN ? 'var(--color-soft)' : 'var(--color-edge-hi)'}`}></span>
+          ))}
+        </span>
+        <span class="font-semibold text-text">{idea.difficulty}</span>
+      </dd>
     </div>
     <div>
-      <dt class="eyebrow text-fog" style="color:var(--color-fog)">Time to MVP</dt>
-      <dd class="mt-1 font-semibold text-text">{idea.timeToMvp}</dd>
+      <dt class="eyebrow">Time to MVP</dt>
+      <dd class="mt-1.5 font-mono tabular-nums font-medium text-text">{idea.timeToMvp}</dd>
     </div>
     <div class="col-span-2">
-      <dt class="eyebrow text-fog" style="color:var(--color-fog)">How it makes money</dt>
-      <dd class="mt-1 text-text/90">{idea.monetisation}</dd>
+      <dt class="eyebrow">How it makes money</dt>
+      <dd class="mt-1.5 text-text/90 leading-relaxed">{idea.monetisation}</dd>
     </div>
     <div class="col-span-2">
-      <dt class="eyebrow text-fog" style="color:var(--color-fog)">First step</dt>
-      <dd class="mt-1 text-text/90">{idea.firstStep}</dd>
+      <dt class="eyebrow">First step</dt>
+      <dd class="mt-1.5 text-text/90 leading-relaxed">{idea.firstStep}</dd>
     </div>
   </dl>
 
   <div class="mt-5 flex flex-wrap items-center gap-2">
     {idea.stack.map((s) => (
-      <span class="chip px-2.5 py-1 text-xs">{s}</span>
+      <span class="chip">{s}</span>
     ))}
   </div>
 

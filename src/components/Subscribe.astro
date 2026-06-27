@@ -3,30 +3,33 @@
 const accessKey = 'sf_9e906eb6c00416b9d3354749';
 ---
 <section id="subscribe" class="wrap-narrow my-24 scroll-mt-24">
-  <div class="reveal term-box p-8 sm:p-10 overflow-hidden" style="--c:var(--color-cyan)">
-    <div class="pointer-events-none absolute -top-24 right-[-10%] h-56 w-[34rem] blur-3xl opacity-40"
-      style="background: radial-gradient(closest-side, rgba(58,214,192,0.4), transparent);"></div>
-    <span class="legend">Newsletter</span>
-    <div class="relative">
-      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-text leading-tight">Get <span class="serif-i grad-text">10 validated ideas</span> every week</h2>
-      <p class="mt-3 text-fog leading-relaxed max-w-xl">
-        One email, every Friday: fresh startup and side-project ideas with demand signals and a starter stack. No spam, unsubscribe in one click.
-      </p>
-      <form action="https://api.staticforms.xyz/submit" method="POST" class="mt-6 flex flex-col sm:flex-row gap-3 max-w-md">
-        <input type="hidden" name="accessKey" value={accessKey} />
-        <input type="hidden" name="subject" value="ideeeas.com, new subscriber" />
-        <input type="hidden" name="_site" value="ideeeas.com" />
-        <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off" />
-        <input
-          type="email"
-          name="email"
-          required
-          placeholder="you@email.com"
-          class="flex-1 bg-panel text-text px-4 py-2.5 rounded-md placeholder:text-fog focus:outline-none"
-          style="border:1px solid color-mix(in srgb, var(--color-cyan) 35%, transparent)"
-        />
-        <button type="submit" class="btn-neon px-5 py-2.5 rounded-md">subscribe</button>
-      </form>
+  <div class="reveal panel p-8 sm:p-10">
+    <!-- ledger top row: folio, leader rule -->
+    <div class="flex items-center gap-4">
+      <span class="legend shrink-0">THE WEEKLY DROP</span>
+      <span class="rule flex-1"></span>
     </div>
+    <h2 class="mt-6 font-display text-3xl sm:text-4xl font-semibold text-text leading-tight tracking-[-0.02em]">
+      Get <span class="serif-i">10 validated ideas</span> every week
+    </h2>
+    <p class="mt-3 text-soft leading-relaxed max-w-xl">
+      One email, every Friday: fresh startup and side-project ideas with demand signals and a starter stack. No spam, unsubscribe in one click.
+    </p>
+    <form action="https://api.staticforms.xyz/submit" method="POST" class="mt-7 flex flex-col sm:flex-row gap-3 max-w-md">
+      <input type="hidden" name="accessKey" value={accessKey} />
+      <input type="hidden" name="subject" value="ideeeas.com, new subscriber" />
+      <input type="hidden" name="_site" value="ideeeas.com" />
+      <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off" />
+      <input
+        type="email"
+        name="email"
+        required
+        aria-label="Email address"
+        placeholder="you@email.com"
+        class="flex-1 bg-term text-text px-4 py-2.5 rounded-md border border-edge-hi placeholder:text-fog focus:border-blue"
+      />
+      <button type="submit" class="btn-neon px-6 py-2.5">Subscribe</button>
+    </form>
+    <p class="mt-4 font-mono text-[0.7rem] tracking-[0.05em] text-fog">No spam. One-click unsubscribe. Weekly only.</p>
   </div>
 </section>

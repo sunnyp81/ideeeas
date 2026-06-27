@@ -1,11 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
+import { totalIdeas, clusters } from '../data/clusters.js';
+const collectionCount = clusters.length;
 ---
 <Base title="Page not found, ideeeas" description="That page does not exist." path="/404/">
-  <section class="wrap-narrow py-32 text-center">
-    <p class="font-display text-8xl font-semibold grad-text">404</p>
-    <h1 class="mt-6 font-display text-2xl font-semibold text-text">That idea wandered off</h1>
-    <p class="mt-3 text-text/80">The page you wanted is not here, but the library is.</p>
-    <a href="/ideas/" class="btn-neon mt-8 inline-block px-7 py-3.5">Browse all ideas</a>
+  <section class="wrap-narrow min-h-[62vh] flex flex-col items-center justify-center py-24 text-center">
+    <div class="legend">ERR / 404</div>
+    <h1 class="mt-6 font-display text-4xl sm:text-5xl font-semibold text-text leading-[1.05] tracking-[-0.025em]">
+      This entry is not in the register.
+    </h1>
+    <p class="mt-4 max-w-md text-soft leading-relaxed">
+      The page you wanted is not catalogued here. The library, however, is open.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <a href="/ideas/" class="btn-neon px-7 py-3.5">Browse the register</a>
+      <a href="/" class="btn-wire px-7 py-3.5">Back to home</a>
+    </div>
+    <div class="legend mt-14 text-fog">
+      ideeeas register / {totalIdeas} entries / {collectionCount} collections / updated weekly
+    </div>
   </section>
 </Base>

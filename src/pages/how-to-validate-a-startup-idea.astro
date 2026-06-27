@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Subscribe from '../components/Subscribe.astro';
-import { pickNeon } from '../data/neon.js';
 const path = '/how-to-validate-a-startup-idea/';
 
 const steps = [
@@ -10,8 +9,10 @@ const steps = [
   ['Look for where money already moves', 'Validated demand usually has a budget attached. Check job posts, competitor pricing, agency rates, and what adjacent tools charge. Silence on price is a red flag.'],
   ['Build the smallest testable slice', 'Ship the one workflow that delivers the core value and nothing else. A landing page with a waitlist, a manual "concierge" version, or a single working feature all count.'],
   ['Charge before you scale', 'Ask for money as early as is honest. A paid pilot, even a small one, is the only validation that survives contact with reality. Free interest is not demand.'],
-  ['Kill or commit on evidence', 'Set a clear signal in advance (e.g. "5 paying pilots in 30 days"). If you hit it, commit. If you miss it, change the idea or the buyer, do not keep polishing.'],
+  ['Kill or commit on evidence', 'Set a clear signal in advance, for example "5 paying pilots in 30 days". If you hit it, commit. If you miss it, change the idea or the buyer, do not keep polishing.'],
 ];
+
+const total = String(steps.length).padStart(2, '0');
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -32,27 +33,34 @@ const jsonld = {
   path={path}
   jsonld={jsonld}
 >
-  <article class="wrap-narrow py-24">
-    <div class="eyebrow">Playbook</div>
-    <h1 class="reveal in mt-4 font-display text-4xl sm:text-5xl font-semibold text-text leading-[1.08]">How to <span class="serif-i grad-text">validate</span> a startup idea before you build it</h1>
-    <p class="reveal in mt-6 text-lg text-text/80 leading-relaxed">
+  <article class="wrap-narrow py-24 sm:py-28">
+    <!-- Folio header -->
+    <div class="reveal in eyebrow eyebrow-pill"><span class="dot"></span> Playbook</div>
+    <div class="reveal in legend mt-6">A METHOD IN {total} STEPS</div>
+    <h1 class="reveal in mt-3 font-display text-4xl sm:text-5xl font-semibold text-text leading-[1.05] tracking-[-0.025em]">
+      How to <span class="serif-i">validate</span> a startup idea before you build it
+    </h1>
+    <p class="reveal in mt-6 text-lg text-soft leading-relaxed">
       Most ideas die not because they were bad, but because nobody checked whether anyone wanted them. Validation is the cheap insurance you buy before spending months building. Here is the same six-step process behind every idea in this library.
     </p>
 
-    <ol class="mt-12 space-y-4">
+    <!-- Register steps -->
+    <ol class="mt-14 list-none pl-0 space-y-5">
       {steps.map(([name, text], i) => (
-        <li class="reveal term-box term-hover p-6 flex gap-5" style={`--c:${pickNeon(i)}`}>
-          <span class="shrink-0 font-display text-3xl font-semibold" style={`color:${pickNeon(i)}`}>{String(i + 1).padStart(2, '0')}</span>
-          <div>
-            <h2 class="font-display text-xl font-semibold text-text">{name}</h2>
-            <p class="mt-2 text-text/80 leading-relaxed">{text}</p>
+        <li class="reveal term-box term-hover accent-top relative p-7 sm:p-8">
+          <div class="flex items-center gap-4">
+            <span class="legend">{String(i + 1).padStart(2, '0')} <span style="color:color-mix(in srgb, var(--color-fog) 55%, var(--color-term))">/ {total}</span></span>
+            <span class="h-px flex-1 bg-edge"></span>
           </div>
+          <h2 class="mt-5 font-display text-[1.375rem] font-semibold text-text tracking-[-0.015em] leading-[1.2]">{name}</h2>
+          <p class="mt-3 text-soft leading-relaxed">{text}</p>
         </li>
       ))}
     </ol>
 
-    <p class="reveal mt-10 text-text/80">
-      Want ideas that already have the demand signal mapped? <a href="/ideas/" class="spark-link font-semibold">Browse the validated idea library →</a>
+    <!-- Closing CTA: the one accent moment -->
+    <p class="reveal mt-12 text-soft leading-relaxed">
+      Want ideas that already have the demand signal mapped? <a href="/ideas/" class="spark-link font-semibold">Browse the validated idea library &rarr;</a>
     </p>
   </article>
   <Subscribe />

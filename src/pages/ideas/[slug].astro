@@ -3,17 +3,26 @@ import Base from '../../layouts/Base.astro';
 import IdeaCard from '../../components/IdeaCard.astro';
 import Subscribe from '../../components/Subscribe.astro';
 import { clusters } from '../../data/clusters.js';
-import { pickNeon } from '../../data/neon.js';
 
 export function getStaticPaths() {
-  return clusters.map((c, i) => ({ params: { slug: c.slug }, props: { cluster: c, accent: pickNeon(i) } }));
+  const total = clusters.length;
+  return clusters.map((c, i) => ({
+    params: { slug: c.slug },
+    props: { cluster: c, n: i + 1, total },
+  }));
 }
 
-const { cluster, accent } = Astro.props;
+const { cluster, n, total } = Astro.props;
 const path = `/ideas/${cluster.slug}/`;
 const url = new URL(path, Astro.site).href;
 
 const others = clusters.filter((c) => c.slug !== cluster.slug).slice(0, 4);
+
+// ledger figures, tabular mono, real counts only
+const pad2 = (x) => String(x).padStart(2, '0');
+const ideaCount = cluster.ideas.length;
+// two-tone ledger: live number bright, total recedes (same value as ideas/index.astro)
+const totalDim = 'color: color-mix(in srgb, var(--color-fog) 55%, var(--color-term))';
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -50,37 +59,100 @@ const jsonld = {
 };
 ---
 <Base title={cluster.seoTitle} description={cluster.seoDescription} path={path} jsonld={jsonld}>
-  <div class="wrap pt-16 sm:pt-20">
-    <nav class="text-sm text-fog mb-6">
-      <a href="/ideas/" class="hover:text-text transition-colors">Ideas</a> <span class="mx-1.5 text-fog/50">/</span>
-      <span class="text-text">{cluster.title}</span>
+  <div class="wrap pt-14 sm:pt-20">
+    <!-- breadcrumb: mono register trail -->
+    <nav aria-label="Breadcrumb" class="legend flex items-center gap-2">
+      <a href="/ideas/" class="text-fog hover:text-text transition-colors">Ideas</a>
+      <span class="text-edge-hi" aria-hidden="true">/</span>
+      <span class="text-soft">{cluster.title}</span>
     </nav>
 
-    <header class="max-w-3xl">
-      <p class="reveal in eyebrow" style={`color:${accent}`}>
-        {cluster.ideas.length} validated ideas · for {cluster.audience}
+    <!-- section header: mono folio over leader rule, then tight display title -->
+    <header class="mt-10 max-w-3xl">
+      <div class="reveal in flex items-center gap-4">
+        <span class="legend whitespace-nowrap">{pad2(n)}<span style={totalDim}> / {pad2(total)}</span>&nbsp;&nbsp;COLLECTION</span>
+        <span class="rule flex-1" aria-hidden="true"></span>
+      </div>
+
+      <h1
+        class="reveal in mt-6 font-display text-text font-semibold text-[clamp(2.5rem,5vw,4rem)]"
+        style="letter-spacing:-0.025em;line-height:1.04"
+      >{cluster.h1}</h1>
+
+      <p class="reveal in mt-6 text-lg text-soft" style="line-height:1.6;max-width:42rem">{cluster.intro}</p>
+
+      <!-- spec strip: real, tabular, monochrome -->
+      <dl class="reveal in mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <div>
+          <dt class="eyebrow text-fog">Entries</dt>
+          <dd class="legend mt-1 text-text">{pad2(ideaCount)}&nbsp;validated</dd>
+        </div>
+        <div>
+          <dt class="eyebrow text-fog">For</dt>
+          <dd class="legend mt-1 text-text">{cluster.audience}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow text-fog">Last reviewed</dt>
+          <dd class="legend mt-1 text-text">{cluster.updated}</dd>
+        </div>
+      </dl>
+
+      <p class="reveal in mt-5 text-sm text-fog" style="max-width:42rem">
+        Every entry is a starting point, not a guarantee. Validate demand before you build.
       </p>
-      <h1 class="reveal in mt-4 font-display text-4xl sm:text-6xl font-semibold leading-[1.06] text-text">{cluster.h1}</h1>
-      <p class="reveal in mt-5 text-lg text-text/80 leading-relaxed">{cluster.intro}</p>
-      <p class="reveal in mt-4 text-sm text-fog">Last reviewed {cluster.updated}. Every idea is a starting point, validate demand before you build.</p>
     </header>
   </div>
 
-  <div class="wrap mt-10 grid gap-6 lg:grid-cols-2">
-    {cluster.ideas.map((idea, i) => <IdeaCard idea={idea} n={i + 1} />)}
-  </div>
+  <!-- the entries: register list label, then the cards -->
+  <section class="wrap mt-16">
+    <div class="flex items-baseline gap-4 mb-7">
+      <span class="eyebrow text-fog whitespace-nowrap">The entries</span>
+      <span class="rule flex-1" aria-hidden="true"></span>
+      <span class="legend whitespace-nowrap text-fog">{pad2(ideaCount)}<span style={totalDim}>&nbsp;/&nbsp;{pad2(ideaCount)}</span></span>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+      {cluster.ideas.map((idea, i) => <IdeaCard idea={idea} n={i + 1} total={cluster.ideas.length} />)}
+    </div>
+  </section>
 
   <Subscribe />
 
-  <section class="wrap mb-20">
-    <h2 class="font-display text-2xl font-semibold mb-6 text-text">More idea collections</h2>
-    <div class="grid gap-4 sm:grid-cols-2">
-      {others.map((c, i) => (
-        <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-5 block" style={`--c:${pickNeon(i + 3)}`}>
-          <div class="font-display text-lg font-semibold text-text">{c.title}</div>
-          <div class="text-sm text-fog mt-1">{c.ideas.length} ideas for {c.audience}</div>
-        </a>
-      ))}
+  <!-- related collections: ledger index, leader rule, accent rail on hover -->
+  <section class="wrap mb-24">
+    <div class="flex items-baseline gap-4 mb-7">
+      <span class="eyebrow text-fog whitespace-nowrap">More collections</span>
+      <span class="rule flex-1" aria-hidden="true"></span>
+      <span class="legend whitespace-nowrap text-fog">{pad2(total)}&nbsp;total</span>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      {others.map((c) => {
+        const idx = clusters.findIndex((x) => x.slug === c.slug) + 1;
+        return (
+          <a
+            href={`/ideas/${c.slug}/`}
+            class="reveal term-box term-hover accent-top p-6 block"
+            aria-label={`${c.title}, ${c.ideas.length} ideas`}
+          >
+            <div class="flex items-center gap-3">
+              <span class="legend text-fog">{pad2(idx)}<span style={totalDim}>&nbsp;/&nbsp;{pad2(total)}</span></span>
+              <span class="rule flex-1" aria-hidden="true"></span>
+            </div>
+            <div class="mt-4 font-display text-xl font-semibold text-text" style="letter-spacing:-0.015em;line-height:1.2">{c.title}</div>
+            <div class="legend mt-2 text-fog">{pad2(c.ideas.length)}&nbsp;ideas&nbsp;&middot;&nbsp;{c.audience}</div>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- register footer line, in character, real numbers only -->
+    <div class="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 justify-between">
+      <p class="legend text-fog">ideeeas register&nbsp;/&nbsp;096 entries&nbsp;/&nbsp;16 collections&nbsp;/&nbsp;updated weekly</p>
+      <div class="flex gap-3">
+        <a href="/ideas/" class="btn-wire px-5 py-2.5 text-sm">Browse the register</a>
+        <a href="#subscribe" class="btn-neon px-5 py-2.5 text-sm">Get weekly ideas</a>
+      </div>
     </div>
   </section>
 </Base>
