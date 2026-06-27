@@ -18,6 +18,8 @@ const jsonld = {
   },
 };
 
+import { pickNeon } from '../data/neon.js';
+
 const pillars = [
   ['Demand', 'Backed by a real, observable signal, not a hunch.'],
   ['Difficulty', 'Honest build effort and time to MVP.'],
@@ -30,45 +32,42 @@ const pillars = [
   <section class="wrap pt-16 sm:pt-24 pb-14">
     <div class="reveal in text-sm text-fog prompt">ideeeas --list --validated</div>
     <h1 class="reveal in mt-5 font-display text-4xl sm:text-6xl font-extrabold leading-[1.08] text-text max-w-4xl">
-      Stop hunting for the idea.<br />Start with a <span class="amber">validated</span> one.<span class="caret ml-1"></span>
+      Stop hunting for the idea.<br />Start with a <span class="grad-text glow">validated</span> one.<span class="caret ml-1"></span>
     </h1>
     <p class="reveal in mt-6 text-base sm:text-lg text-text/80 max-w-2xl leading-relaxed">
       {totalIdeas}+ startup and side-project ideas, each one with a real demand signal, build difficulty, how it makes money, and the first step you should take. No fluff, no get-rich-quick.
     </p>
     <div class="reveal in mt-8 flex flex-wrap gap-4">
-      <a href="/ideas/" class="btn-term px-6 py-3">[ browse all ideas ]</a>
-      <a href="#subscribe" class="btn-ghost px-6 py-3">get the weekly drop</a>
+      <a href="/ideas/" class="btn-neon px-6 py-3 rounded-md">browse all ideas →</a>
+      <a href="#subscribe" class="btn-wire px-6 py-3 rounded-md">get the weekly drop</a>
     </div>
   </section>
 
   <!-- How each idea is structured -->
   <section class="wrap py-6">
-    <div class="term-box p-6">
-      <span class="legend font-display">schema.idea</span>
-      <div class="grid gap-6 sm:grid-cols-4 mt-1">
-        {pillars.map(([t, d]) => (
-          <div class="reveal">
-            <div class="font-display font-bold amber">{t}</div>
-            <p class="mt-1.5 text-sm text-fog leading-relaxed">{d}</p>
-          </div>
-        ))}
-      </div>
+    <div class="grid gap-4 sm:grid-cols-4">
+      {pillars.map(([t, d], i) => (
+        <div class="reveal term-box p-5" style={`--c:${pickNeon(i)}`}>
+          <div class="font-display font-bold glow" style={`color:${pickNeon(i)}`}>{t}</div>
+          <p class="mt-1.5 text-sm text-fog leading-relaxed">{d}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <!-- Featured collections -->
   <section class="wrap py-14">
     <div class="flex items-end justify-between mb-7">
-      <h2 class="reveal font-display text-2xl font-bold text-text"><span class="green">#</span> popular collections</h2>
+      <h2 class="reveal font-display text-2xl font-bold text-text"><span class="grad-text">#</span> popular collections</h2>
       <a href="/ideas/" class="spark-link text-sm">see all {clusters.length} →</a>
     </div>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {featured.map((c) => (
-        <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-6 block">
-          <div class="text-xs text-fog"><span class="green">{String(c.ideas.length).padStart(2, '0')}</span> ideas · {c.audience}</div>
+      {featured.map((c, i) => (
+        <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-6 block" style={`--c:${pickNeon(i)}`}>
+          <div class="text-xs text-fog"><span class="glow font-bold" style={`color:${pickNeon(i)}`}>{String(c.ideas.length).padStart(2, '0')}</span> ideas · {c.audience}</div>
           <h3 class="mt-2 font-display text-lg font-bold text-text">{c.title}</h3>
           <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
-          <span class="mt-4 inline-block text-sm amber">open →</span>
+          <span class="mt-4 inline-block text-sm" style={`color:${pickNeon(i)}`}>open →</span>
         </a>
       ))}
     </div>

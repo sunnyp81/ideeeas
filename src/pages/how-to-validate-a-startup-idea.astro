@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Subscribe from '../components/Subscribe.astro';
+import { pickNeon } from '../data/neon.js';
 const path = '/how-to-validate-a-startup-idea/';
 
 const steps = [
@@ -33,15 +34,15 @@ const jsonld = {
 >
   <article class="wrap-narrow py-20">
     <div class="text-sm text-fog prompt">man validate-idea</div>
-    <h1 class="reveal in mt-4 font-display text-3xl sm:text-5xl font-extrabold text-text leading-tight">How to <span class="amber">validate</span> a startup idea before you build it</h1>
+    <h1 class="reveal in mt-4 font-display text-3xl sm:text-5xl font-extrabold text-text leading-tight">How to <span class="grad-text glow">validate</span> a startup idea before you build it</h1>
     <p class="reveal in mt-6 text-lg text-text/80 leading-relaxed">
       Most ideas die not because they were bad, but because nobody checked whether anyone wanted them. Validation is the cheap insurance you buy before spending months building. Here is the same six-step process behind every idea in this library.
     </p>
 
     <ol class="mt-12 space-y-4">
       {steps.map(([name, text], i) => (
-        <li class="reveal term-box p-6 flex gap-5">
-          <span class="shrink-0 font-display text-xl font-bold amber">{String(i + 1).padStart(2, '0')}</span>
+        <li class="reveal term-box term-hover p-6 flex gap-5" style={`--c:${pickNeon(i)}`}>
+          <span class="shrink-0 font-display text-xl font-bold glow" style={`color:${pickNeon(i)}`}>{String(i + 1).padStart(2, '0')}</span>
           <div>
             <h2 class="font-display text-lg font-bold text-text">{name}</h2>
             <p class="mt-2 text-text/80 leading-relaxed">{text}</p>

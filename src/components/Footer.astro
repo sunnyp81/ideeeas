@@ -1,16 +1,17 @@
 ---
 const year = 2026;
 ---
-<footer class="mt-24 text-sm" style="border-top:1px solid rgba(120,255,180,0.16)">
+<footer class="mt-24 text-sm">
+  <div class="rule"></div>
   <div class="wrap py-12 grid gap-8 sm:grid-cols-3">
     <div>
-      <div class="font-display font-extrabold text-text"><span class="green">~/</span>ide<span class="amber">eea</span>s</div>
+      <div class="font-display font-extrabold text-text"><span class="grad-text">~/</span>ide<span class="grad-text">eea</span>s</div>
       <p class="mt-3 text-fog max-w-xs leading-relaxed">
         A growing library of validated startup and side-project ideas, demand, difficulty, money, and a starter stack for each.
       </p>
     </div>
     <div>
-      <div class="amber mb-3"># explore</div>
+      <div class="mb-3" style="color:var(--color-cyan)"># explore</div>
       <ul class="space-y-2 text-fog">
         <li><a href="/ideas/" class="hover:text-text transition-colors">all idea collections</a></li>
         <li><a href="/how-to-validate-a-startup-idea/" class="hover:text-text transition-colors">how to validate an idea</a></li>
@@ -18,14 +19,13 @@ const year = 2026;
       </ul>
     </div>
     <div>
-      <div class="amber mb-3"># weekly drop</div>
+      <div class="mb-3" style="color:var(--color-magenta)"># weekly drop</div>
       <p class="text-fog mb-3">10 validated ideas in your inbox every week.</p>
-      <a href="/#subscribe" class="btn-term inline-block px-3 py-1.5">[ subscribe free ]</a>
+      <a href="/#subscribe" class="btn-neon inline-block px-3.5 py-1.5 rounded-md">subscribe free</a>
     </div>
   </div>
-  <div class="rule"></div>
-  <div class="wrap py-5 text-xs text-fog/80 flex flex-col sm:flex-row gap-2 justify-between">
-    <span><span class="green">$</span> echo "© {year} ideeeas. ideas are starting points, validate before you build."</span>
+  <div class="wrap py-5 text-xs text-fog/80 flex flex-col sm:flex-row gap-2 justify-between" style="border-top:1px solid rgba(140,140,180,0.12)">
+    <span><span style="color:var(--color-mint)">$</span> echo "© {year} ideeeas. ideas are starting points, validate before you build."</span>
     <span>// some outbound tool links may be affiliate links</span>
   </div>
 </footer>
