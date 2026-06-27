@@ -5,6 +5,9 @@ Astro 5 + Tailwind 4 static content site. A growing library of **validated start
 ## Why this domain
 Aged brandable ("ideeeas" = ideas) Sunny already owned. Real legacy authority in the builders/design/startup-tech niche: a **DR90 dofollow link from Smashing Magazine**, DR89 TheNextWeb (nofollow), wwwhatsnew, theoldreader, cssmania, tableless.com.br. ~199 real referring domains but value concentrated in ~10. Original ~2010 startup ("share your idea with two images and one tweet"). Built 2026-06-27 to inherit that topical relevance.
 
+## Design (current: neo-brutalist colour-block)
+Live look is **neo-brutalist**: warm grid-paper canvas, 3px ink borders, hard offset shadows (no blur), vivid flat colour block per collection via `src/data/palette.js` (`pickColor(i)`), Space Grotesk chunky display + Inter body, `.mark` marker-highlight, `.press`/`.press-lg` down-hover, `.btn-pop`/`.btn-blk`, `.brut`/`.shadow-hard*` primitives in `global.css`. Two earlier concepts in git history: paper+spark-orange (initial), then dark-glass kinetic (violet→cyan). To switch concept, swap `global.css` tokens/utilities + the per-component classes. Favicon + OG match the active theme.
+
 ## Architecture
 - Content lives in `src/data/clusters/*.js` — one default-export object per file (schema documented at top of `ai-saas-ideas.js`). `src/data/clusters.js` globs them all (eager) and sorts by title.
 - `src/pages/ideas/[slug].astro` renders each cluster (Article + ItemList + BreadcrumbList JSON-LD). `ideas/index.astro` lists all. `index.astro` = homepage hub.
