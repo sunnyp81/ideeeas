@@ -18,10 +18,10 @@ const jsonld = {
   path={path}
   jsonld={jsonld}
 >
-  <div class="wrap pt-16 sm:pt-20">
-    <div class="text-sm text-fog prompt">ls ./ideas</div>
-    <h1 class="reveal in mt-4 font-display text-3xl sm:text-5xl font-extrabold text-text">Every <span class="grad-text glow">idea</span> collection</h1>
-    <p class="reveal in mt-4 text-text/80 max-w-2xl leading-relaxed">
+  <div class="wrap pt-20 sm:pt-24">
+    <div class="eyebrow">The library</div>
+    <h1 class="reveal in mt-4 font-display text-4xl sm:text-6xl font-semibold text-text">Every <span class="serif-i grad-text">idea</span> collection</h1>
+    <p class="reveal in mt-5 text-lg text-text/80 max-w-2xl leading-relaxed">
       {totalIdeas} validated ideas across {clusters.length} collections. Each one is structured the same way, demand, difficulty, how it makes money, and the first step.
     </p>
   </div>
@@ -29,8 +29,8 @@ const jsonld = {
   <div class="wrap mt-10 mb-24 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     {clusters.map((c, i) => (
       <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-6 block" style={`--c:${pickNeon(i)}`}>
-        <div class="text-xs text-fog"><span class="glow font-bold" style={`color:${pickNeon(i)}`}>{String(c.ideas.length).padStart(2, '0')}</span> ideas · {c.audience}</div>
-        <h2 class="mt-2 font-display text-lg font-bold text-text">{c.title}</h2>
+        <span class="legend">{c.ideas.length} ideas · {c.audience}</span>
+        <h2 class="font-display text-xl font-semibold text-text">{c.title}</h2>
         <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
       </a>
     ))}

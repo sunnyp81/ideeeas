@@ -4,58 +4,59 @@ const { idea, n } = Astro.props;
 const c = pickNeon(n - 1);
 
 const demand = {
-  High: ['var(--color-mint)', 'HIGH'],
-  Medium: ['var(--color-yellow)', 'MED'],
-  Emerging: ['var(--color-magenta)', 'NEW'],
+  High: ['var(--color-mint)', 'High demand'],
+  Medium: ['var(--color-yellow)', 'Medium demand'],
+  Emerging: ['var(--color-violet)', 'Emerging'],
 }[idea.demand] || ['var(--color-fog)', '—'];
 
 const diffN = { Low: 1, Medium: 2, High: 3 }[idea.difficulty] || 0;
-const meter = '█'.repeat(diffN) + '░'.repeat(3 - diffN);
+const dots = '●'.repeat(diffN) + '○'.repeat(3 - diffN);
 const id = String(n).padStart(2, '0');
 ---
-<article class="reveal term-box term-hover p-6 sm:p-7 text-sm" style={`--c:${c}`}>
-  <span class="legend font-display">idea_{id}</span>
-
-  <div class="flex items-start justify-between gap-4 mt-1">
-    <h3 class="font-display text-lg font-bold text-text">{idea.name}</h3>
-    <span class="shrink-0 font-display text-xs glow" style={`color:${demand[0]}`}>[{demand[1]}]</span>
+<article class="reveal term-box term-hover p-6 sm:p-7" style={`--c:${c}`}>
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <span class="legend">Idea {id}</span>
+      <h3 class="font-display text-2xl font-semibold text-text leading-tight">{idea.name}</h3>
+    </div>
+    <span class="shrink-0 text-xs font-semibold mt-1" style={`color:${demand[0]}`}>{demand[1]}</span>
   </div>
 
-  <p class="mt-3 text-text/85 leading-relaxed">{idea.pitch}</p>
+  <p class="mt-4 text-text/85 leading-relaxed">{idea.pitch}</p>
 
-  <p class="mt-3 text-fog"><span style={`color:${c}`}>// problem:</span> {idea.problem}</p>
+  <p class="mt-3 text-sm text-fog"><span class="font-semibold text-text/90">The problem.</span> {idea.problem}</p>
 
-  <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3" style="border-top:1px solid rgba(140,140,180,0.14); padding-top:1.1rem">
+  <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 text-sm" style="border-top:1px solid rgba(150,165,190,0.12); padding-top:1.25rem">
     <div>
-      <dt class="text-fog text-xs">difficulty</dt>
-      <dd class="font-bold"><span class="tracking-widest glow" style={`color:${c}`}>{meter}</span> <span class="text-text">{idea.difficulty}</span></dd>
+      <dt class="eyebrow text-fog" style="color:var(--color-fog)">Difficulty</dt>
+      <dd class="mt-1 font-semibold"><span class="tracking-[0.2em]" style={`color:${c}`}>{dots}</span> <span class="text-text">{idea.difficulty}</span></dd>
     </div>
     <div>
-      <dt class="text-fog text-xs">time_to_mvp</dt>
-      <dd class="font-bold text-text">{idea.timeToMvp}</dd>
+      <dt class="eyebrow text-fog" style="color:var(--color-fog)">Time to MVP</dt>
+      <dd class="mt-1 font-semibold text-text">{idea.timeToMvp}</dd>
     </div>
     <div class="col-span-2">
-      <dt class="text-fog text-xs">revenue</dt>
-      <dd class="text-text/90">{idea.monetisation}</dd>
+      <dt class="eyebrow text-fog" style="color:var(--color-fog)">How it makes money</dt>
+      <dd class="mt-1 text-text/90">{idea.monetisation}</dd>
     </div>
     <div class="col-span-2">
-      <dt class="text-fog text-xs">first_step</dt>
-      <dd class="text-text/90">{idea.firstStep}</dd>
+      <dt class="eyebrow text-fog" style="color:var(--color-fog)">First step</dt>
+      <dd class="mt-1 text-text/90">{idea.firstStep}</dd>
     </div>
   </dl>
 
   <div class="mt-5 flex flex-wrap items-center gap-2">
     {idea.stack.map((s) => (
-      <span class="chip px-2 py-0.5 text-xs rounded">{s}</span>
+      <span class="chip px-2.5 py-1 text-xs">{s}</span>
     ))}
   </div>
 
   {idea.tools?.length > 0 && (
-    <p class="mt-4 text-fog text-xs">
-      <span style={`color:${c}`}>$</span> build_with{' '}
+    <p class="mt-4 text-sm text-fog">
+      Build it with{' '}
       {idea.tools.map((t, i) => (
         <>
-          <a href={t.url} rel="nofollow sponsored noopener noreferrer" target="_blank" class="spark-link">{t.name}</a>{i < idea.tools.length - 1 ? ' ' : ''}
+          <a href={t.url} rel="nofollow sponsored noopener noreferrer" target="_blank" class="spark-link">{t.name}</a>{i < idea.tools.length - 1 ? ', ' : ''}
         </>
       ))}
     </p>

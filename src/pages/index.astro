@@ -29,45 +29,48 @@ const pillars = [
 ---
 <Base path="/" jsonld={jsonld}>
   <!-- Hero -->
-  <section class="wrap pt-16 sm:pt-24 pb-14">
-    <div class="reveal in text-sm text-fog prompt">ideeeas --list --validated</div>
-    <h1 class="reveal in mt-5 font-display text-4xl sm:text-6xl font-extrabold leading-[1.08] text-text max-w-4xl">
-      Stop hunting for the idea.<br />Start with a <span class="grad-text glow">validated</span> one.<span class="caret ml-1"></span>
+  <section class="wrap pt-20 sm:pt-28 pb-16">
+    <div class="reveal in eyebrow">Validated ideas, not idea spam</div>
+    <h1 class="reveal in mt-5 font-display text-5xl sm:text-7xl font-semibold leading-[1.04] text-text max-w-4xl">
+      Stop hunting for the idea. Start with a <span class="serif-i grad-text">validated</span> one.
     </h1>
-    <p class="reveal in mt-6 text-base sm:text-lg text-text/80 max-w-2xl leading-relaxed">
+    <p class="reveal in mt-7 text-lg sm:text-xl text-text/80 max-w-2xl leading-relaxed">
       {totalIdeas}+ startup and side-project ideas, each one with a real demand signal, build difficulty, how it makes money, and the first step you should take. No fluff, no get-rich-quick.
     </p>
-    <div class="reveal in mt-8 flex flex-wrap gap-4">
-      <a href="/ideas/" class="btn-neon px-6 py-3 rounded-md">browse all ideas →</a>
-      <a href="#subscribe" class="btn-wire px-6 py-3 rounded-md">get the weekly drop</a>
+    <div class="reveal in mt-9 flex flex-wrap gap-4">
+      <a href="/ideas/" class="btn-neon px-7 py-3.5">Browse all ideas</a>
+      <a href="#subscribe" class="btn-wire px-7 py-3.5">Get the weekly drop</a>
     </div>
   </section>
 
   <!-- How each idea is structured -->
   <section class="wrap py-6">
-    <div class="grid gap-4 sm:grid-cols-4">
-      {pillars.map(([t, d], i) => (
-        <div class="reveal term-box p-5" style={`--c:${pickNeon(i)}`}>
-          <div class="font-display font-bold glow" style={`color:${pickNeon(i)}`}>{t}</div>
-          <p class="mt-1.5 text-sm text-fog leading-relaxed">{d}</p>
-        </div>
-      ))}
+    <div class="term-box p-7">
+      <span class="legend">How every idea is structured</span>
+      <div class="grid gap-7 sm:grid-cols-4 mt-2">
+        {pillars.map(([t, d]) => (
+          <div class="reveal">
+            <div class="font-display text-lg font-semibold text-text">{t}</div>
+            <p class="mt-1.5 text-sm text-fog leading-relaxed">{d}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Featured collections -->
-  <section class="wrap py-14">
-    <div class="flex items-end justify-between mb-7">
-      <h2 class="reveal font-display text-2xl font-bold text-text"><span class="grad-text">#</span> popular collections</h2>
-      <a href="/ideas/" class="spark-link text-sm">see all {clusters.length} →</a>
+  <section class="wrap py-16">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="reveal font-display text-3xl font-semibold text-text">Popular collections</h2>
+      <a href="/ideas/" class="spark-link text-sm">See all {clusters.length} →</a>
     </div>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {featured.map((c, i) => (
         <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-6 block" style={`--c:${pickNeon(i)}`}>
-          <div class="text-xs text-fog"><span class="glow font-bold" style={`color:${pickNeon(i)}`}>{String(c.ideas.length).padStart(2, '0')}</span> ideas · {c.audience}</div>
-          <h3 class="mt-2 font-display text-lg font-bold text-text">{c.title}</h3>
+          <span class="legend">{c.ideas.length} ideas · {c.audience}</span>
+          <h3 class="font-display text-xl font-semibold text-text">{c.title}</h3>
           <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
-          <span class="mt-4 inline-block text-sm" style={`color:${pickNeon(i)}`}>open →</span>
+          <span class="mt-4 inline-block text-sm spark-link border-0">Explore →</span>
         </a>
       ))}
     </div>
