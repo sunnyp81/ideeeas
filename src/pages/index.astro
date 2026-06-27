@@ -1,9 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Subscribe from '../components/Subscribe.astro';
+import IdeaCard from '../components/IdeaCard.astro';
 import { clusters, totalIdeas } from '../data/clusters.js';
 
 const featured = clusters.slice(0, 6);
+
+// a real taste of the library: one strong entry from four varied collections
+const sampleSlugs = ['micro-saas-ideas', 'side-hustle-ideas', 'ai-business-ideas', 'newsletter-business-ideas'];
+const samples = sampleSlugs
+  .map((s) => clusters.find((c) => c.slug === s))
+  .filter(Boolean)
+  .map((c) => ({ idea: c.ideas[0], collTitle: c.title, collSlug: c.slug }))
+  .filter((x) => x.idea)
+  .slice(0, 4);
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -142,19 +152,43 @@ const pillars = [
     </div>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {featured.map((c, i) => (
-        <a href={`/ideas/${c.slug}/`} class="reveal card card-hover accent-top p-6 block group">
+        <a href={`/ideas/${c.slug}/`} class="reveal card card-hover accent-top p-6 block group overflow-hidden">
+          <!-- oversized ghosted index: editorial register character -->
+          <span aria-hidden="true" class="pointer-events-none absolute -top-3 right-3 font-display font-bold leading-none select-none" style="font-size:5.5rem;color:rgba(150,162,200,0.05)">{String(i + 1).padStart(2, '0')}</span>
           <!-- ledger top row: index, leader rule -->
-          <div class="flex items-center gap-4">
-            <span class="legend shrink-0"><span style="color:var(--color-fog)">{String(i + 1).padStart(2, '0')}</span><span style={`color:${dim}`}> / {collections2}</span></span>
+          <div class="relative flex items-center gap-4">
+            <span class="legend shrink-0"><span style="color:var(--color-cyan)">{String(i + 1).padStart(2, '0')}</span><span style={`color:${dim}`}> / {collections2}</span></span>
             <span class="rule flex-1"></span>
           </div>
-          <h3 class="mt-5 font-display text-xl font-semibold text-text tracking-[-0.015em]">{c.title}</h3>
-          <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
-          <div class="mt-6 flex items-center justify-between">
-            <span class="font-mono text-[0.7rem] tracking-[0.05em] text-fog" style="font-variant-numeric:tabular-nums">{String(c.ideas.length).padStart(2, '0')} ideas</span>
-            <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-soft">Explore <span class="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span></span>
+          <h3 class="relative mt-5 font-display text-xl font-semibold text-text tracking-[-0.015em]">{c.title}</h3>
+          <p class="relative mt-2 text-sm text-soft line-clamp-3 leading-relaxed">{c.intro}</p>
+          <div class="relative mt-6 flex items-center justify-between">
+            <span class="font-mono text-[0.7rem] tracking-[0.05em] text-fog" style="font-variant-numeric:tabular-nums">{String(c.ideas.length).padStart(2, '0')} ideas &middot; {c.audience}</span>
+            <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue">Explore <span class="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span></span>
           </div>
         </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Fresh from the library: real entries, the actual product on show -->
+  <section class="wrap pb-20">
+    <div class="flex items-end justify-between mb-10 gap-6">
+      <div class="reveal">
+        <div class="legend">S.03 / FROM THE LIBRARY</div>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl font-semibold text-text tracking-[-0.02em]">A taste of the entries</h2>
+        <p class="mt-3 text-soft leading-relaxed max-w-xl">Every entry is specced the same way: demand, difficulty, how it earns, and the first move. Here are four pulled from across the library.</p>
+      </div>
+      <a href="/ideas/" class="spark-link text-sm shrink-0 whitespace-nowrap">Browse the register &rarr;</a>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {samples.map((s, i) => (
+        <div class="reveal">
+          <a href={`/ideas/${s.collSlug}/`} class="legend inline-flex items-center gap-2 mb-3 text-fog hover:text-blue transition-colors">
+            <span class="text-blue">&rsaquo;</span> {s.collTitle}
+          </a>
+          <IdeaCard idea={s.idea} n={i + 1} total={samples.length} />
+        </div>
       ))}
     </div>
   </section>

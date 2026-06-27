@@ -10,9 +10,9 @@
   --color-term: #08090C;       /* page / base canvas */
   --color-panel: #0E1016;      /* raised: card, term-box */
   --color-float: #15181F;      /* floating: panel, menus, hero preview */
-  --color-text: #EDEFF4;       /* primary text, no pure white */
-  --color-soft: #A4ABBB;       /* secondary text */
-  --color-fog: #6A7283;        /* muted: labels, mono index, captions */
+  --color-text: #F2F4F8;       /* primary text, no pure white */
+  --color-soft: #B4BBCB;       /* secondary text */
+  --color-fog: #828A9C;        /* muted: labels, mono index, captions */
 
   /* the one disciplined accent (refined indigo), named cyan as instructed */
   --color-cyan: #6E79F2;       /* THE accent: primary fill, active nav, brand mark */
@@ -27,8 +27,9 @@
   --color-yellow: #E0B65C;     /* alias of medium gold */
 
   /* hairlines and demand dots */
-  --color-edge: #1A1E27;       /* border default, approx rgba(255,255,255,0.06) */
-  --color-edge-hi: #2B313D;    /* border hover / active, approx rgba(255,255,255,0.12) */
+  --color-edge: #20242F;       /* border default */
+  --color-edge-hi: #323847;    /* border hover / active */
+  --color-grid: rgba(150, 162, 200, 0.035); /* blueprint grid line */
   --color-high: #5DD6A0;       /* high-demand text, muted emerald */
   --color-high-dot: #46B17B;   /* high-demand dot fill */
   --color-med-dot: #C9A14A;    /* medium-demand dot fill */
@@ -36,12 +37,28 @@
 
 @layer base {
   html { scroll-behavior: smooth; background: var(--color-term); color: var(--color-text); }
-  /* flat honest near-black canvas, no mesh, no glow, no fixed grid */
+  /* near-black canvas with one disciplined indigo light pool, top-right */
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    position: relative;
     background-color: var(--color-term);
+    background-image:
+      radial-gradient(1100px 620px at 82% -180px, rgba(110, 121, 242, 0.18), transparent 68%),
+      radial-gradient(900px 520px at 6% 2%, rgba(110, 121, 242, 0.07), transparent 60%);
+    background-attachment: fixed;
   }
+  /* blueprint grid, faint, fading out toward the edges, sits behind content */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 58px 58px;
+    mask-image: radial-gradient(125% 90% at 50% 0%, #000 35%, transparent 92%);
+    -webkit-mask-image: radial-gradient(125% 90% at 50% 0%, #000 35%, transparent 92%);
+  }
+  body > * { position: relative; z-index: 1; }
   :focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
   ::selection { background: rgba(110, 121, 242, 0.30); color: #fff; }
 }
@@ -78,13 +95,13 @@
   color: var(--color-fog); text-transform: none;
 }
 
-/* raised surface, solid fill, 1px edge, catch-light bevel, no blur, no gradient */
+/* raised surface, subtle top-lit gradient, 1px edge, catch-light bevel */
 .card, .term-box {
   position: relative;
-  background: var(--color-panel);
+  background: linear-gradient(180deg, #14161D 0%, var(--color-panel) 60%);
   border: 1px solid var(--color-edge);
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 /* blueprint corner ticks: 1px L brackets, flat edge at rest */
 .card::before, .term-box::before,
@@ -98,11 +115,13 @@
 
 /* interaction: brighten border, lift, reveal accent ticks plus rail, no glow */
 .card-hover, .term-hover {
-  transition: border-color 160ms cubic-bezier(0.16, 1, 0.3, 1), transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 180ms cubic-bezier(0.16, 1, 0.3, 1), transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .card-hover:hover, .term-hover:hover,
 .card-hover:focus-within, .term-hover:focus-within {
-  border-color: var(--color-edge-hi); transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-cyan) 45%, var(--color-edge-hi));
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px -30px rgba(0, 0, 0, 0.9), 0 0 34px -14px rgba(110, 121, 242, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 .card-hover:hover::before, .term-hover:hover::before,
 .card-hover:focus-within::before, .term-hover:focus-within::before,
