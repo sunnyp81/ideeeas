@@ -5,7 +5,10 @@ Astro 5 + Tailwind 4 static content site. A growing library of **validated start
 ## Why this domain
 Aged brandable ("ideeeas" = ideas) Sunny already owned. Real legacy authority in the builders/design/startup-tech niche: a **DR90 dofollow link from Smashing Magazine**, DR89 TheNextWeb (nofollow), wwwhatsnew, theoldreader, cssmania, tableless.com.br. ~199 real referring domains but value concentrated in ~10. Original ~2010 startup ("share your idea with two images and one tweet"). Built 2026-06-27 to inherit that topical relevance.
 
-## Design (current: elegant editorial, dark + teal)
+## Design (current: elevated editorial, dark + teal + glass)
+Latest polish pass: premium 2-col hero with a **live sample idea-card preview** in a `.panel` glass card + stat strip + `.eyebrow-pill` (glowing dot); centred **icon bento** (inline SVG per pillar via `set:html`); `.card`/`.term-box` now glassy with `.accent-top` gradient top-line + `.card-hover`/`.term-hover` lift+glow; layered gradient-mesh body bg + faint grid + vignette (`body::before`, masked); `.icon-box`, refined `.btn-neon` (gradient pill). Fonts Fraunces + Plus Jakarta Sans, single teal `#4fe0c8` accent (+ soft blue/violet cousins via `neon.js`). `.card` and legacy `.term-box` are aliased to the same rules in `global.css`.
+
+## (superseded) elegant editorial, dark + teal
 Live look (2026-06-27, latest): **Fraunces serif display** (`--font-display`, italic accent words via `.serif-i`) + **Plus Jakarta Sans** body (`--font-sans`) on the dark `#0a0c11` base with a single teal accent `#45d6c0`. Moved OFF JetBrains Mono / terminal aesthetic. `global.css`: `.eyebrow` (uppercase tracked teal label, replaces old `$`/`#` shell bits), `.term-box` (now soft rounded card, `--c` accent on `.legend` + `.term-hover` lift), `.btn-neon` (pill teal) / `.btn-wire`, `.grad-text` (teal→blue), `.serif-i` (Fraunces italic), `.glow`, `.rule`, `.spark-link`, `.chip`. IdeaCard uses a clean dot difficulty meter (`●○`) and plain labels. `neon.js pickNeon(i)` returns 3 teal-family cousins for subtle per-card tonal variation. To re-skin swap `global.css` tokens/utilities + fonts in `Base.astro`. Favicon (teal mark) + OG (serif) match.
 
 ## (superseded) refined dark tech, single teal accent
