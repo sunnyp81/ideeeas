@@ -13,7 +13,7 @@ const diffN = { Low: 1, Medium: 2, High: 3 }[idea.difficulty] || 0;
 const dots = '●'.repeat(diffN) + '○'.repeat(3 - diffN);
 const id = String(n).padStart(2, '0');
 ---
-<article class="reveal term-box term-hover p-6 sm:p-7" style={`--c:${c}`}>
+<article class="reveal term-box term-hover accent-top p-6 sm:p-7" style={`--c:${c}`}>
   <div class="flex items-start justify-between gap-4">
     <div>
       <span class="legend">Idea {id}</span>

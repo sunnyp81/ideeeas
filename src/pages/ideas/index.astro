@@ -28,10 +28,11 @@ const jsonld = {
 
   <div class="wrap mt-10 mb-24 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     {clusters.map((c, i) => (
-      <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-6 block" style={`--c:${pickNeon(i)}`}>
+      <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover accent-top p-6 block group" style={`--c:${pickNeon(i)}`}>
         <span class="legend">{c.ideas.length} ideas · {c.audience}</span>
         <h2 class="font-display text-xl font-semibold text-text">{c.title}</h2>
         <p class="mt-2 text-sm text-fog line-clamp-3 leading-relaxed">{c.intro}</p>
+        <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold" style={`color:${pickNeon(i)}`}>Explore <span class="transition-transform group-hover:translate-x-1">→</span></span>
       </a>
     ))}
   </div>
