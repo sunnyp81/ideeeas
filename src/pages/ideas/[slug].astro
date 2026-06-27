@@ -50,18 +50,18 @@ const jsonld = {
 ---
 <Base title={cluster.seoTitle} description={cluster.seoDescription} path={path} jsonld={jsonld}>
   <div class="wrap pt-16 sm:pt-20">
-    <nav class="text-sm text-fog mb-6 font-semibold">
-      <a href="/ideas/" class="hover:bg-yellow px-1">All ideas</a> <span class="mx-1 text-fog/60">/</span>
-      <span class="text-ink">{cluster.title}</span>
+    <nav class="text-sm text-fog mb-6">
+      <a href="/ideas/" class="hover:text-amber transition-colors">ideas</a> <span class="mx-1 text-fog/60">/</span>
+      <span class="text-text">{cluster.slug}</span>
     </nav>
 
     <header class="max-w-3xl">
-      <p class="reveal in inline-block brut px-2 py-1 font-bold uppercase tracking-wide text-xs text-ink" style="background:var(--color-lime)">
+      <p class="reveal in text-sm green font-display">
         {cluster.ideas.length} validated ideas · for {cluster.audience}
       </p>
-      <h1 class="reveal in mt-4 font-display text-4xl sm:text-5xl font-bold leading-tight text-ink">{cluster.h1}</h1>
-      <p class="reveal in mt-5 text-lg text-ink/80 leading-relaxed font-medium">{cluster.intro}</p>
-      <p class="reveal in mt-4 text-sm text-fog">Last reviewed {cluster.updated}. Every idea is a starting point, validate demand before you build.</p>
+      <h1 class="reveal in mt-3 font-display text-3xl sm:text-5xl font-extrabold leading-tight text-text">{cluster.h1}</h1>
+      <p class="reveal in mt-5 text-lg text-text/80 leading-relaxed">{cluster.intro}</p>
+      <p class="reveal in mt-4 text-sm text-fog"><span class="amber">//</span> last reviewed {cluster.updated}. Every idea is a starting point, validate demand before you build.</p>
     </header>
   </div>
 
@@ -72,11 +72,11 @@ const jsonld = {
   <Subscribe />
 
   <section class="wrap mb-20">
-    <h2 class="font-display text-2xl font-bold mb-6 text-ink">More idea collections</h2>
+    <h2 class="font-display text-xl font-bold mb-6 text-text"><span class="green">#</span> more idea collections</h2>
     <div class="grid gap-4 sm:grid-cols-2">
       {others.map((c) => (
-        <a href={`/ideas/${c.slug}/`} class="reveal press bg-white brut shadow-hard-sm p-5 block">
-          <div class="font-display font-bold text-ink">{c.title}</div>
+        <a href={`/ideas/${c.slug}/`} class="reveal term-box term-hover p-5 block">
+          <div class="font-display font-bold text-text">{c.title}</div>
           <div class="text-sm text-fog mt-1">{c.ideas.length} ideas for {c.audience}</div>
         </a>
       ))}

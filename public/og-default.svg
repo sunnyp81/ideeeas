@@ -1,15 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#fdfbf2"/>
-  <g stroke="#131210" stroke-opacity="0.06" stroke-width="1">
-    <path d="M0 70 H1200 M0 140 H1200 M0 210 H1200 M0 280 H1200 M0 350 H1200 M0 420 H1200 M0 490 H1200 M0 560 H1200"/>
-    <path d="M80 0 V630 M180 0 V630 M280 0 V630 M380 0 V630 M480 0 V630 M580 0 V630 M680 0 V630 M780 0 V630 M880 0 V630 M980 0 V630 M1080 0 V630"/>
+  <rect width="1200" height="630" fill="#0a0b0d"/>
+  <g stroke="#3ef0a0" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 78 H1200 M0 156 H1200 M0 234 H1200 M0 312 H1200 M0 390 H1200 M0 468 H1200 M0 546 H1200"/>
+    <path d="M104 0 V630 M208 0 V630 M312 0 V630 M416 0 V630 M520 0 V630 M624 0 V630 M728 0 V630 M832 0 V630 M936 0 V630 M1040 0 V630"/>
   </g>
-  <rect x="78" y="92" width="240" height="46" fill="#bdf24e" stroke="#131210" stroke-width="3"/>
-  <text x="92" y="125" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="26" fill="#131210">VALIDATED IDEAS</text>
-  <text x="80" y="280" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="84" fill="#131210">Startup &amp; side-project</text>
-  <text x="80" y="378" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="84" fill="#131210">ideas, with the <tspan fill="#131210">receipts</tspan></text>
-  <rect x="556" y="312" width="282" height="78" fill="#ffe14d" opacity="0.55"/>
-  <text x="80" y="470" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="32" fill="#595650">Demand · difficulty · money · first step</text>
-  <rect x="78" y="520" width="170" height="58" fill="#131210"/>
-  <text x="163" y="557" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="30" fill="#fdfbf2">ideeeas</text>
+  <text x="80" y="150" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="30" fill="#79817a"><tspan fill="#3ef0a0">$</tspan> ideeeas --list --validated</text>
+  <text x="80" y="300" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="72" fill="#d7ddd2">Validated startup &amp;</text>
+  <text x="80" y="390" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="72" fill="#d7ddd2">side-project <tspan fill="#ffb000">ideas</tspan><tspan fill="#ffb000">_</tspan></text>
+  <text x="80" y="480" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="30" fill="#79817a">demand · difficulty · money · first_step</text>
 </svg>
